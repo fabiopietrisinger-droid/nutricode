@@ -1,6 +1,6 @@
 media:
-  folder: imagens/uploads
-  public: imagens/uploads
+  input: imagens/uploads
+  output: /imagens/uploads
 
 content:
   - name: produtos
@@ -9,13 +9,12 @@ content:
     folder: content/produtos
     extension: md
     format: frontmatter
-    slug: '{{titulo}}'
     fields:
-      - name: titulo
+      - name: title
         label: Nome do Suplemento
         type: string
         required: true
-      - name: imagem
+      - name: image
         label: Imagem do Produto
         type: image
         required: true

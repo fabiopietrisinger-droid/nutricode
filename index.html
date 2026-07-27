@@ -5,7 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NutriCode | Nutrição Inteligente</title>
     
-    <!-- LIBS PARA CONVERTER MARKDOWN/YAML CLIENT-SIDE (MESMA LÓGICA DA CM ACESSÓRIOS) -->
+    <!-- FAVICON -->
+    <link rel="icon" type="image/png" href="imagens/uploads/logo.png">
+
+    <!-- META TAGS DE COMPARTILHAMENTO (FACEBOOK, WHATSAPP, LINKEDIN) -->
+    <meta name="description" content="Nutrição Inteligente e Suplementação de Alta Performance para você alcançar seus melhores resultados.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://nutricode.com.br/">
+    <meta property="og:title" content="NutriCode | Nutrição Inteligente">
+    <meta property="og:description" content="Nutrição Inteligente e Suplementação de Alta Performance para você alcançar seus melhores resultados.">
+    <meta property="og:image" content="https://nutricode.com.br/imagens/uploads/hero01.jpg">
+
+    <!-- META TAGS TWITTER -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://nutricode.com.br/">
+    <meta property="twitter:title" content="NutriCode | Nutrição Inteligente">
+    <meta property="twitter:description" content="Nutrição Inteligente e Suplementação de Alta Performance para você alcançar seus melhores resultados.">
+    <meta property="twitter:image" content="https://nutricode.com.br/imagens/uploads/hero01.jpg">
+
+    <!-- LIBS PARA CONVERTER MARKDOWN/YAML CLIENT-SIDE (API GITHUB) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/4.1.0/js-yaml.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
@@ -14,7 +32,6 @@
             /* Paleta de Cores High-Tech */
             --bg-body: #0d0d0d;
             --bg-header: #141414;
-            --bg-search: #222222;
             --bg-card: #1a1a1a;
             --text-main: #ffffff;
             --text-muted: #a0a0a0;
@@ -22,6 +39,7 @@
             --accent-hover: #1ab5cc;
             --btn-text: #000000;
             --whatsapp-green: #25D366;
+            --whatsapp-hover: #20ba5a;
             
             /* Espaçamentos */
             --space-xs: 8px;
@@ -63,7 +81,7 @@
         /* --- CABEÇALHO --- */
         .header-top {
             background-color: var(--bg-header);
-            padding: 20px 5%;
+            padding: 16px 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -71,51 +89,34 @@
         }
 
         .logo img {
-            max-height: 70px; 
+            max-height: 65px; 
             width: auto;
             display: block;
         }
 
-        .search-container {
-            display: flex;
-            width: 100%;
-            max-width: 500px;
-            position: relative;
-        }
-
-        .search-input {
-            width: 100%;
-            padding: 12px 20px;
+        /* BOTÃO CTA WHATSAPP TOPO */
+        .header-cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background-color: var(--whatsapp-green);
+            color: #ffffff;
+            padding: 12px 24px;
             border-radius: 30px;
-            border: 1px solid #333;
-            background-color: var(--bg-search);
-            color: var(--text-main);
-            font-size: 1rem;
-            outline: none;
-            transition: border-color 0.3s;
-        }
-
-        .search-input:focus {
-            border-color: var(--accent-color);
-        }
-
-        .search-btn {
-            position: absolute;
-            right: 5px;
-            top: 50%;
-            transform: translateY(-50%);
-            background-color: var(--accent-color);
-            color: var(--btn-text);
-            border: none;
-            border-radius: 30px;
-            padding: 8px 20px;
             font-weight: 900;
-            cursor: pointer;
-            transition: background-color 0.3s;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.2);
         }
 
-        .search-btn:hover {
-            background-color: var(--accent-hover);
+        .header-cta-btn:hover {
+            background-color: var(--whatsapp-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+            color: #ffffff;
         }
 
         /* --- MENU --- */
@@ -154,15 +155,19 @@
         }
 
         @media (max-width: 768px) {
-            .header-top { flex-direction: column; gap: 20px; }
+            .header-top { 
+                flex-direction: column; 
+                gap: 16px; 
+                text-align: center;
+            }
             .header-nav ul { justify-content: flex-start; }
         }
 
         /* --- HERO SLIDER --- */
         .hero-slider-wrapper {
             width: 100%;
-            height: 60vh;
-            min-height: 400px;
+            height: 55vh;
+            min-height: 380px;
             position: relative;
             overflow: hidden;
             background-color: #000;
@@ -198,7 +203,7 @@
         }
 
         .slide-content h2 {
-            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-size: clamp(2.2rem, 5vw, 3.8rem);
             font-weight: 900;
             text-transform: uppercase;
             line-height: 1.1;
@@ -212,35 +217,30 @@
         }
 
         .section-title {
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             text-align: center;
             text-transform: uppercase;
-            margin-bottom: 40px;
+            margin-bottom: 32px;
             font-weight: 900;
         }
 
-        /* --- FILTROS --- */
+        /* --- FILTROS RESPONSIVOS --- */
         .filtro-painel {
             display: flex;
-            gap: 12px;
-            overflow-x: auto;
-            padding: 0 0 32px 0;
-            scrollbar-width: none;
-            -ms-overflow-style: none;
-        }
-
-        .filtro-painel::-webkit-scrollbar {
-            display: none;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 40px;
         }
 
         .filtro-btn {
             background-color: var(--bg-card);
             color: var(--text-muted);
             border: 1px solid #333;
-            padding: 10px 24px;
+            padding: 10px 20px;
             border-radius: 30px;
-            font-size: 0.9rem;
-            font-weight: bold;
+            font-size: 0.85rem;
+            font-weight: 700;
             text-transform: uppercase;
             white-space: nowrap;
             cursor: pointer;
@@ -251,13 +251,28 @@
             background-color: var(--accent-color);
             color: var(--btn-text);
             border-color: var(--accent-color);
-            box-shadow: 0 4px 15px rgba(35, 207, 231, 0.2);
+            box-shadow: 0 4px 15px rgba(35, 207, 231, 0.25);
+        }
+
+        /* Ajuste dos filtros para navegação fluida em celulares */
+        @media (max-width: 900px) {
+            .filtro-painel {
+                flex-wrap: nowrap;
+                justify-content: flex-start;
+                overflow-x: auto;
+                padding: 0 0 15px 0;
+                scrollbar-width: none;
+                -ms-overflow-style: none;
+            }
+            .filtro-painel::-webkit-scrollbar {
+                display: none;
+            }
         }
 
         /* --- GRID DE PRODUTOS --- */
         .grid-produtos {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 24px;
         }
 
@@ -474,9 +489,40 @@
         }
 
         .modal-btn-whatsapp:hover {
+            background-color: var(--whatsapp-hover);
             transform: translateY(-2px);
             box-shadow: 0 8px 20px rgba(37, 211, 102, 0.4);
             color: #fff;
+        }
+
+        /* --- BOTÃO FLUTUANTE DO WHATSAPP --- */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 60px;
+            height: 60px;
+            background-color: var(--whatsapp-green);
+            color: #ffffff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+            z-index: 999;
+            transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            background-color: var(--whatsapp-hover);
+            box-shadow: 0 6px 25px rgba(37, 211, 102, 0.6);
+            color: #ffffff;
+        }
+
+        .whatsapp-float svg {
+            width: 34px;
+            height: 34px;
         }
 
         /* --- SEÇÃO SOBRE --- */
@@ -639,6 +685,7 @@
         }
 
         .whatsapp-btn:hover {
+            background-color: var(--whatsapp-hover);
             transform: translateY(-3px);
             box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3);
             color: #fff;
@@ -663,10 +710,14 @@
                     <img src="imagens/uploads/logo.png" alt="NutriCode Logo" onerror="this.outerHTML='<h2 style=\'font-size: 1.8rem; font-weight: 900; text-transform: uppercase; color: var(--text-main);\'>Nutri<span style=\'color: var(--accent-color);\'>Code</span></h2>'">
                 </a>
             </div>
-            <div class="search-container">
-                <input type="text" id="search-input" class="search-input" placeholder="Busque por suplementos...">
-                <button class="search-btn" onclick="executarBusca()">Buscar</button>
-            </div>
+            
+            <!-- BOTÃO CTA DE ATENDIMENTO TOPO -->
+            <a href="https://wa.me/5511982092987?text=Estou%20no%20site%20e%20quero%20saber%20mais%20sobre%20os%20produtos" target="_blank" class="header-cta-btn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a5.358 5.358 0 00-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                </svg>
+                Peça por whatsapp
+            </a>
         </div>
         
         <nav class="header-nav">
@@ -779,7 +830,7 @@
                 <div class="footer-col">
                     <h4>Entre em Contato</h4>
                     <p style="color: var(--text-muted); margin-bottom: 16px; font-size: 0.95rem;">Fale com nossos especialistas para tirar dúvidas ou finalizar seu pedido.</p>
-                    <a href="https://wa.me/5511982092987" target="_blank" class="whatsapp-btn">
+                    <a href="https://wa.me/5511982092987?text=Estou%20no%20site%20e%20quero%20saber%20mais%20sobre%20os%20produtos" target="_blank" class="whatsapp-btn">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                             <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a5.358 5.358 0 00-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
                         </svg>
@@ -794,6 +845,13 @@
             </div>
         </div>
     </footer>
+
+    <!-- BOTÃO FLUTUANTE DO WHATSAPP -->
+    <a href="https://wa.me/5511982092987?text=Estou%20no%20site%20e%20quero%20saber%20mais%20sobre%20os%20produtos" target="_blank" class="whatsapp-float" title="Fale Conosco pelo WhatsApp">
+        <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a5.358 5.358 0 00-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+    </a>
 
     <!-- MODAL / POPUP DINÂMICO -->
     <div id="modal-detalhes" class="modal-overlay">
@@ -815,10 +873,10 @@
         </div>
     </div>
 
-    <!-- SCRIPT DE INTEGRAÇÃO API GITHUB (MESMA LÓGICA DA CM ACESSÓRIOS) -->
+    <!-- SCRIPT DE INTEGRAÇÃO COM A API DO GITHUB -->
     <script>
         const GITHUB_USER = 'fabiopietrisinger-droid';
-        const GITHUB_REPO = 'nutricode'; // Nome do repositório
+        const GITHUB_REPO = 'nutricode';
         const WHATSAPP_NUMERO = '5511982092987';
         let todosOsProdutos = [];
 
@@ -839,7 +897,7 @@
                         data.body = marked.parse(mdBody);
                         return data;
                     } catch (err) {
-                        console.error("Erro ao converter o YAML:", err);
+                        console.error("Erro ao converter YAML:", err);
                         return null;
                     }
                 }
@@ -930,26 +988,21 @@
             document.querySelector('.products-section').scrollIntoView({ behavior: 'smooth' });
         }
 
-        function executarBusca() {
-            const termo = document.getElementById('search-input').value.toLowerCase().trim();
-            if(!termo) {
-                renderizarProdutos(todosOsProdutos);
-                return;
-            }
-            const resultado = todosOsProdutos.filter(p => {
-                const titulo = (p.title || '').toLowerCase();
-                const corpo = (p.body || '').toLowerCase();
-                return titulo.includes(termo) || corpo.includes(termo);
-            });
-            renderizarProdutos(resultado);
-            document.querySelector('.products-section').scrollIntoView({ behavior: 'smooth' });
-        }
-
         function abrirModal(index) {
             const p = todosOsProdutos[index];
             if(!p) return;
 
             const tituloFormatado = p.title || 'Suplemento NutriCode';
+            
+            // Tratamento da Categoria para a mensagem do WhatsApp
+            let categoriaFormatada = 'Geral';
+            if (p.categorias) {
+                if (Array.isArray(p.categorias)) {
+                    categoriaFormatada = p.categorias.join(', ');
+                } else {
+                    categoriaFormatada = p.categorias;
+                }
+            }
             
             document.getElementById('modal-nome').innerText = tituloFormatado;
             document.getElementById('modal-detalhes-tecnicos').innerText = p.detalhes ? `📦 ${p.detalhes}` : 'Nutrição Inteligente e Alta Performance';
@@ -982,7 +1035,8 @@
                 });
             }
 
-            const textoWaProduto = `Olá! Gostaria de comprar ou tirar dúvidas sobre o produto: *${tituloFormatado}* (${p.detalhes || ''})`;
+            // MENSAGEM ESPECÍFICA DO PRODUTO: "Estou no site e tenho interesse pelo produto: <categoria> | <produto>"
+            const textoWaProduto = `Estou no site e tenho interesse pelo produto: ${categoriaFormatada} | ${tituloFormatado}`;
             document.getElementById('modal-btn-wa').href = `https://wa.me/${WHATSAPP_NUMERO}?text=${encodeURIComponent(textoWaProduto)}`;
             
             document.getElementById('modal-detalhes').style.display = 'flex';
@@ -1026,10 +1080,6 @@
         document.addEventListener('DOMContentLoaded', () => {
             initSlider();
             inicializarSite();
-
-            document.getElementById('search-input').addEventListener('keyup', (e) => {
-                if (e.key === 'Enter') executarBusca();
-            });
         });
     </script>
 </body>

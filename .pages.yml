@@ -1,6 +1,6 @@
 media:
   folder: imagens/uploads
-  public: /imagens/uploads
+  public: imagens/uploads
 
 content:
   - name: suplementos
@@ -24,7 +24,7 @@ content:
         type: string
         required: true
       - name: categorias
-        label: Categorias (Selecione as opções)
+        label: Categorias
         type: select
         multiple: true
         options:

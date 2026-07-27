@@ -5,10 +5,7 @@ media:
 content:
   - name: produtos
     label: Produtos NutriCode
-    type: collection
-    folder: content
-    extension: md
-    format: frontmatter
+    file: content/produtos.md
     fields:
       - name: title
         label: Nome do Suplemento

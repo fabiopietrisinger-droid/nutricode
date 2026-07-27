@@ -4,21 +4,30 @@ media:
 
 content:
   - name: "produtos"
-    label: "Produtos (Catálogo)"
+    label: "Produtos (NutriCode)"
     type: "collection"
     path: "content/produtos"
     fields:
       - name: "title"
-        label: "Título"
+        label: "Nome do Suplemento"
         type: "string"
-      - name: "categoria"
-        label: "Categoria"
+      - name: "detalhes"
+        label: "Detalhes (Ex: 900g, 60 cápsulas, 30ml)"
+        type: "string"
+      - name: "categorias"
+        label: "Categorias"
         type: "select"
+        multiple: true
         options:
-          values: ["Braceletes", "Colares", "Colares Decorativos", "Japamala", "Pulseiras", "Pulseiras Infantis"]
-      - name: "valor"
-        label: "Valor (Ex: 149,90)"
-        type: "string"
+          values:
+            - "bloqueador-de-carboidrato"
+            - "ganho-de-massa"
+            - "indutor-do-sono"
+            - "multivitaminico"
+            - "pre-treino"
+            - "precursor-hormonal"
+            - "proteina"
+            - "termogenico"
       - name: "image"
         label: "Imagem Principal"
         type: "image"
@@ -31,5 +40,5 @@ content:
             label: "Foto"
             type: "image"
       - name: "body"
-        label: "Descrição"
+        label: "Descrição de Vendas (Copy)"
         type: "rich-text"

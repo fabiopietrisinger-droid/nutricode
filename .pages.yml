@@ -1,0 +1,35 @@
+media:
+  input: "imagens/uploads"
+  output: "/imagens/uploads"
+
+content:
+  - name: "produtos"
+    label: "Produtos (Catálogo)"
+    type: "collection"
+    path: "content/produtos"
+    fields:
+      - name: "title"
+        label: "Título"
+        type: "string"
+      - name: "categoria"
+        label: "Categoria"
+        type: "select"
+        options:
+          values: ["Braceletes", "Colares", "Colares Decorativos", "Japamala", "Pulseiras", "Pulseiras Infantis"]
+      - name: "valor"
+        label: "Valor (Ex: 149,90)"
+        type: "string"
+      - name: "image"
+        label: "Imagem Principal"
+        type: "image"
+      - name: "galeria"
+        label: "Galeria de Fotos"
+        type: "object"
+        list: true
+        fields:
+          - name: "foto"
+            label: "Foto"
+            type: "image"
+      - name: "body"
+        label: "Descrição"
+        type: "rich-text"

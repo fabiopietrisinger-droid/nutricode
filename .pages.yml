@@ -1,11 +1,15 @@
 media:
-  folder: imagens/uploads
-  public: imagens/uploads
+  input: imagens/uploads
+  output: /imagens/uploads
 
 content:
   - name: produtos
     label: Produtos NutriCode
-    file: content/produtos.md
+    type: collection
+    path: content/produtos
+    format: yaml-frontmatter
+    view:
+      primary: title
     fields:
       - name: title
         label: Nome do Suplemento

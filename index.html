@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NutriCode | Nutrição Inteligente</title>
+    
+    <!-- LIBS PARA CONVERTER MARKDOWN/YAML CLIENT-SIDE (MESMA LÓGICA DA CM ACESSÓRIOS) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/4.1.0/js-yaml.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
     <style>
         :root {
             /* Paleta de Cores High-Tech */
@@ -25,7 +30,7 @@
             --space-lg: 64px;
             --space-xl: 120px;
             
-            /* Tipografia */
+            /* Tipografia e Bordas */
             --font-family: 'Helvetica Neue', Arial, sans-serif;
             --radius: 8px;
         }
@@ -141,6 +146,7 @@
             font-weight: bold;
             text-transform: uppercase;
             transition: color 0.3s;
+            cursor: pointer;
         }
 
         .header-nav ul li a:hover {
@@ -262,12 +268,7 @@
             border: 1px solid #2a2a2a;
             display: flex;
             flex-direction: column;
-            transition: transform 0.3s ease, border-color 0.3s ease, opacity 0.4s ease;
-        }
-
-        .card-produto.oculto {
-            display: none;
-            opacity: 0;
+            transition: transform 0.3s ease, border-color 0.3s ease;
         }
 
         .card-produto:hover {
@@ -275,27 +276,44 @@
             border-color: var(--accent-color);
         }
 
-        .img-produto {
+        .img-wrapper {
             width: 100%;
-            height: 200px;
+            height: 220px;
             background-color: #111;
             border-radius: 4px;
             margin-bottom: 20px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .img-produto {
+            width: 100%;
+            height: 100%;
             object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .card-produto:hover .img-produto {
+            transform: scale(1.05);
         }
 
         .card-produto h3 {
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             margin-bottom: 12px;
             color: var(--accent-color);
             text-transform: uppercase;
+            cursor: pointer;
         }
 
         .card-produto p.desc {
             color: var(--text-muted);
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             margin-bottom: 16px;
             flex-grow: 1;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
 
         .card-produto .details {
@@ -304,7 +322,7 @@
             background: #222;
             padding: 10px;
             border-radius: 4px;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
             color: #ddd;
         }
 
@@ -327,7 +345,141 @@
             background-color: var(--accent-hover);
         }
 
-        /* --- SEÇÃO SOBRE (SPLIT LAYOUT & GLASSMORPHISM) --- */
+        /* --- MODAL / POPUP DE DETALHES --- */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background-color: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background-color: var(--bg-card);
+            border: 1px solid var(--accent-color);
+            border-radius: var(--radius);
+            max-width: 650px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 32px;
+            position: relative;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.8);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 16px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 2rem;
+            cursor: pointer;
+            transition: color 0.3s;
+            line-height: 1;
+        }
+
+        .modal-close:hover {
+            color: var(--accent-color);
+        }
+
+        .modal-body {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .modal-img {
+            width: 100%;
+            max-height: 300px;
+            object-fit: cover;
+            border-radius: 4px;
+            background-color: #111;
+        }
+
+        .thumbnails-grid {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding-bottom: 5px;
+        }
+
+        .thumb-img {
+            width: 70px;
+            height: 70px;
+            object-fit: cover;
+            border-radius: 4px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            opacity: 0.6;
+            transition: all 0.3s ease;
+        }
+
+        .thumb-img.active, .thumb-img:hover {
+            border-color: var(--accent-color);
+            opacity: 1;
+        }
+
+        .modal-title {
+            font-size: 1.8rem;
+            color: var(--accent-color);
+            text-transform: uppercase;
+            font-weight: 900;
+        }
+
+        .modal-desc {
+            color: #d0d0d0;
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+
+        .modal-desc p {
+            margin-bottom: 12px;
+        }
+
+        .modal-details {
+            background: #222;
+            padding: 12px 16px;
+            border-radius: 4px;
+            font-size: 0.95rem;
+            font-weight: bold;
+            color: #fff;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .modal-btn-whatsapp {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            background-color: var(--whatsapp-green);
+            color: #fff;
+            padding: 16px 24px;
+            border-radius: var(--radius);
+            font-weight: 900;
+            text-transform: uppercase;
+            font-size: 1.1rem;
+            text-decoration: none;
+            transition: transform 0.3s, box-shadow 0.3s;
+            margin-top: 10px;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .modal-btn-whatsapp:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(37, 211, 102, 0.4);
+            color: #fff;
+        }
+
+        /* --- SEÇÃO SOBRE --- */
         .about-modern {
             position: relative;
             padding: var(--space-xl) 0;
@@ -463,6 +615,7 @@
             color: var(--text-muted);
             transition: color 0.3s;
             font-size: 0.95rem;
+            cursor: pointer;
         }
 
         .footer-menu a:hover {
@@ -507,25 +660,25 @@
         <div class="header-top">
             <div class="logo">
                 <a href="#">
-                    <img src="imagens/uploads/logo.png" alt="NutriCode Logo" onerror="this.outerHTML='Nutri<span style=\'color: var(--accent-color);\'>Code</span>'">
+                    <img src="imagens/uploads/logo.png" alt="NutriCode Logo" onerror="this.outerHTML='<h2 style=\'font-size: 1.8rem; font-weight: 900; text-transform: uppercase; color: var(--text-main);\'>Nutri<span style=\'color: var(--accent-color);\'>Code</span></h2>'">
                 </a>
             </div>
             <div class="search-container">
-                <input type="text" class="search-input" placeholder="Busque por suplementos...">
-                <button class="search-btn">Buscar</button>
+                <input type="text" id="search-input" class="search-input" placeholder="Busque por suplementos...">
+                <button class="search-btn" onclick="executarBusca()">Buscar</button>
             </div>
         </div>
         
         <nav class="header-nav">
             <ul>
-                <li><a href="#" class="nav-link" data-target="bloqueador-de-carboidrato">Bloqueador de Carboidrato</a></li>
-                <li><a href="#" class="nav-link" data-target="ganho-de-massa">Ganho de Massa</a></li>
-                <li><a href="#" class="nav-link" data-target="indutor-do-sono">Indutor do Sono</a></li>
-                <li><a href="#" class="nav-link" data-target="multivitaminico">Multivitamínico</a></li>
-                <li><a href="#" class="nav-link" data-target="pre-treino">Pré Treino</a></li>
-                <li><a href="#" class="nav-link" data-target="precursor-hormonal">Precursor Hormonal</a></li>
-                <li><a href="#" class="nav-link" data-target="proteina">Proteína</a></li>
-                <li><a href="#" class="nav-link" data-target="termogenico">Termogênico</a></li>
+                <li><a onclick="filtrarCategoria('bloqueador-de-carboidrato')">Bloqueador de Carboidrato</a></li>
+                <li><a onclick="filtrarCategoria('ganho-de-massa')">Ganho de Massa</a></li>
+                <li><a onclick="filtrarCategoria('indutor-do-sono')">Indutor do Sono</a></li>
+                <li><a onclick="filtrarCategoria('multivitaminico')">Multivitamínico</a></li>
+                <li><a onclick="filtrarCategoria('pre-treino')">Pré Treino</a></li>
+                <li><a onclick="filtrarCategoria('precursor-hormonal')">Precursor Hormonal</a></li>
+                <li><a onclick="filtrarCategoria('proteina')">Proteína</a></li>
+                <li><a onclick="filtrarCategoria('termogenico')">Termogênico</a></li>
             </ul>
         </nav>
     </header>
@@ -560,19 +713,19 @@
             <h2 class="section-title">Nossa linha de produtos</h2>
             
             <div class="filtro-painel">
-                <button class="filtro-btn ativo" data-filter="todos">Todos</button>
-                <button class="filtro-btn" data-filter="bloqueador-de-carboidrato">Bloqueador de Carboidrato</button>
-                <button class="filtro-btn" data-filter="ganho-de-massa">Ganho de Massa</button>
-                <button class="filtro-btn" data-filter="indutor-do-sono">Indutor do Sono</button>
-                <button class="filtro-btn" data-filter="multivitaminico">Multivitamínico</button>
-                <button class="filtro-btn" data-filter="pre-treino">Pré Treino</button>
-                <button class="filtro-btn" data-filter="precursor-hormonal">Precursor Hormonal</button>
-                <button class="filtro-btn" data-filter="proteina">Proteína</button>
-                <button class="filtro-btn" data-filter="termogenico">Termogênico</button>
+                <button class="filtro-btn ativo" onclick="filtrarCategoria('todas')">Todos</button>
+                <button class="filtro-btn" onclick="filtrarCategoria('bloqueador-de-carboidrato')">Bloqueador de Carboidrato</button>
+                <button class="filtro-btn" onclick="filtrarCategoria('ganho-de-massa')">Ganho de Massa</button>
+                <button class="filtro-btn" onclick="filtrarCategoria('indutor-do-sono')">Indutor do Sono</button>
+                <button class="filtro-btn" onclick="filtrarCategoria('multivitaminico')">Multivitamínico</button>
+                <button class="filtro-btn" onclick="filtrarCategoria('pre-treino')">Pré Treino</button>
+                <button class="filtro-btn" onclick="filtrarCategoria('precursor-hormonal')">Precursor Hormonal</button>
+                <button class="filtro-btn" onclick="filtrarCategoria('proteina')">Proteína</button>
+                <button class="filtro-btn" onclick="filtrarCategoria('termogenico')">Termogênico</button>
             </div>
 
-            <div class="grid-produtos" id="produtos-container">
-                <!-- Cards gerados via JS -->
+            <div class="grid-produtos" id="grid-produtos">
+                <p class="loading" style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 40px;">Carregando produtos...</p>
             </div>
         </section>
 
@@ -602,7 +755,7 @@
                 <!-- Coluna 1: Marca -->
                 <div class="footer-col">
                     <div class="logo" style="margin-bottom: 16px;">
-                        <img src="imagens/uploads/logo.png" alt="NutriCode Logo" style="max-height: 60px;" onerror="this.outerHTML='<h2 style=\'font-size: 1.8rem; font-weight: 900; text-transform: uppercase;\'>Nutri<span style=\'color: var(--accent-color);\'>Code</span></h2>'">
+                        <img src="imagens/uploads/logo.png" alt="NutriCode Logo" style="max-height: 60px;" onerror="this.outerHTML='<h2 style=\'font-size: 1.8rem; font-weight: 900; text-transform: uppercase; color: var(--text-main);\'>Nutri<span style=\'color: var(--accent-color);\'>Code</span></h2>'">
                     </div>
                     <p style="color: var(--text-muted); font-size: 0.95rem;">Nutrição Inteligente e Suplementação de Alta Performance para você alcançar seus melhores resultados.</p>
                 </div>
@@ -611,18 +764,18 @@
                 <div class="footer-col">
                     <h4>Categorias</h4>
                     <ul class="footer-menu">
-                        <li><a href="#" class="nav-link" data-target="bloqueador-de-carboidrato">Bloqueador de Carboidrato</a></li>
-                        <li><a href="#" class="nav-link" data-target="ganho-de-massa">Ganho de Massa</a></li>
-                        <li><a href="#" class="nav-link" data-target="indutor-do-sono">Indutor do Sono</a></li>
-                        <li><a href="#" class="nav-link" data-target="multivitaminico">Multivitamínico</a></li>
-                        <li><a href="#" class="nav-link" data-target="pre-treino">Pré Treino</a></li>
-                        <li><a href="#" class="nav-link" data-target="precursor-hormonal">Precursor Hormonal</a></li>
-                        <li><a href="#" class="nav-link" data-target="proteina">Proteína</a></li>
-                        <li><a href="#" class="nav-link" data-target="termogenico">Termogênico</a></li>
+                        <li><a onclick="filtrarCategoria('bloqueador-de-carboidrato')">Bloqueador de Carboidrato</a></li>
+                        <li><a onclick="filtrarCategoria('ganho-de-massa')">Ganho de Massa</a></li>
+                        <li><a onclick="filtrarCategoria('indutor-do-sono')">Indutor do Sono</a></li>
+                        <li><a onclick="filtrarCategoria('multivitaminico')">Multivitamínico</a></li>
+                        <li><a onclick="filtrarCategoria('pre-treino')">Pré Treino</a></li>
+                        <li><a onclick="filtrarCategoria('precursor-hormonal')">Precursor Hormonal</a></li>
+                        <li><a onclick="filtrarCategoria('proteina')">Proteína</a></li>
+                        <li><a onclick="filtrarCategoria('termogenico')">Termogênico</a></li>
                     </ul>
                 </div>
 
-                <!-- Coluna 3: Contato -->
+                <!-- Coluna 3: Contato WhatsApp -->
                 <div class="footer-col">
                     <h4>Entre em Contato</h4>
                     <p style="color: var(--text-muted); margin-bottom: 16px; font-size: 0.95rem;">Fale com nossos especialistas para tirar dúvidas ou finalizar seu pedido.</p>
@@ -642,12 +795,224 @@
         </div>
     </footer>
 
-    <!-- SCRIPTS -->
+    <!-- MODAL / POPUP DINÂMICO -->
+    <div id="modal-detalhes" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close" onclick="fecharModal()">&times;</button>
+            <div class="modal-body">
+                <img id="modal-imagem-principal" src="" alt="Produto" class="modal-img">
+                <div id="modal-thumbnails" class="thumbnails-grid"></div>
+                <h3 id="modal-nome" class="modal-title"></h3>
+                <div id="modal-detalhes-tecnicos" class="modal-details"></div>
+                <div id="modal-descricao" class="modal-desc"></div>
+                <a id="modal-btn-wa" href="" target="_blank" class="modal-btn-whatsapp">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a5.358 5.358 0 00-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                    </svg>
+                    Comprar via WhatsApp
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPT DE INTEGRAÇÃO API GITHUB (MESMA LÓGICA DA CM ACESSÓRIOS) -->
     <script>
-        // 1. LÓGICA DO HERO SLIDER
+        const GITHUB_USER = 'fabiopietrisinger-droid';
+        const GITHUB_REPO = 'nutricode'; // Nome do repositório
+        const WHATSAPP_NUMERO = '5511982092987';
+        let todosOsProdutos = [];
+
+        function urlSemCache(urlBase) {
+            if (!urlBase) return '';
+            return urlBase + (urlBase.includes('?') ? '&' : '?') + 't=' + new Date().getTime();
+        }
+
+        function extrairDadosMarkdown(rawText) {
+            const content = rawText.trim();
+            if (content.startsWith('---')) {
+                const endIdx = content.indexOf('\n---', 3);
+                if (endIdx !== -1) {
+                    const yamlBlock = content.substring(3, endIdx);
+                    const mdBody = content.substring(endIdx + 4).trim();
+                    try {
+                        const data = jsyaml.load(yamlBlock) || {};
+                        data.body = marked.parse(mdBody);
+                        return data;
+                    } catch (err) {
+                        console.error("Erro ao converter o YAML:", err);
+                        return null;
+                    }
+                }
+            }
+            return null;
+        }
+
+        async function inicializarSite() {
+            try {
+                const resLista = await fetch(urlSemCache(`https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/content/produtos`));
+                if(resLista.ok) {
+                    const arquivos = await resLista.json();
+                    todosOsProdutos = [];
+                    
+                    for (const arquivo of arquivos) {
+                        if (arquivo.name.endsWith('.md') && arquivo.download_url) {
+                            try {
+                                const resItem = await fetch(urlSemCache(arquivo.download_url));
+                                const txtProd = await resItem.text();
+                                const produto = extrairDadosMarkdown(txtProd);
+                                if (produto && produto.title) {
+                                    todosOsProdutos.push(produto);
+                                }
+                            } catch (e) {
+                                console.error(`Erro ao baixar arquivo ${arquivo.name}.`);
+                            }
+                        }
+                    }
+                    renderizarProdutos(todosOsProdutos);
+                } else {
+                    document.getElementById('grid-produtos').innerHTML = '<p class="loading" style="grid-column: 1/-1; text-align:center; color: var(--text-muted); padding: 40px;">Nenhum produto cadastrado até o momento.</p>';
+                }
+            } catch (error) {
+                console.error("Erro na conexão com o repositório.", error);
+                document.getElementById('grid-produtos').innerHTML = '<p class="loading" style="grid-column: 1/-1; text-align:center; color: var(--text-muted); padding: 40px;">Erro ao carregar o catálogo de produtos.</p>';
+            }
+        }
+
+        function renderizarProdutos(lista) {
+            const grid = document.getElementById('grid-produtos');
+            if(!grid) return;
+            grid.innerHTML = '';
+
+            if(lista.length === 0) {
+                grid.innerHTML = '<p class="loading" style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 40px;">Nenhum produto nesta categoria.</p>';
+                return;
+            }
+
+            lista.forEach((produto) => {
+                const originalIdx = todosOsProdutos.indexOf(produto);
+                const imgSrc = produto.image || 'imagens/uploads/logo.png';
+                const detalhesText = produto.detalhes ? `📦 ${produto.detalhes}` : 'Informações sob consulta';
+
+                const card = document.createElement('article');
+                card.className = 'card-produto';
+                card.innerHTML = `
+                    <div class="img-wrapper" onclick="abrirModal(${originalIdx})">
+                        <img src="${imgSrc}" alt="${produto.title || 'Suplemento'}" class="img-produto" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'100%\\' height=\\'100%\\'><rect width=\\'100%\\' height=\\'100%\\' fill=\\'#111\\'/><text x=\\'50%\\' y=\\'50%\\' fill=\\'#555\\' font-family=\\'Arial\\' font-size=\\'14\\' text-anchor=\\'middle\\' dominant-baseline=\\'middle\\'>Sem Imagem</text></svg>'">
+                    </div>
+                    <h3 onclick="abrirModal(${originalIdx})">${produto.title || 'Suplemento NutriCode'}</h3>
+                    <p class="desc">${produto.body ? produto.body.replace(/<[^>]*>?/gm, '') : ''}</p>
+                    <div class="details">${detalhesText}</div>
+                    <button class="btn-comprar" onclick="abrirModal(${originalIdx})">Comprar</button>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function filtrarCategoria(categoria) {
+            document.querySelectorAll('.filtro-btn').forEach(btn => {
+                const match = btn.getAttribute('onclick').includes(`'${categoria}'`);
+                btn.classList.toggle('ativo', match);
+            });
+
+            if (categoria === 'todas') {
+                renderizarProdutos(todosOsProdutos);
+            } else {
+                const filtrados = todosOsProdutos.filter(p => {
+                    if (!p.categorias) return false;
+                    if (Array.isArray(p.categorias)) {
+                        return p.categorias.includes(categoria);
+                    }
+                    return p.categorias.toLowerCase() === categoria.toLowerCase();
+                });
+                renderizarProdutos(filtrados);
+            }
+
+            document.querySelector('.products-section').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function executarBusca() {
+            const termo = document.getElementById('search-input').value.toLowerCase().trim();
+            if(!termo) {
+                renderizarProdutos(todosOsProdutos);
+                return;
+            }
+            const resultado = todosOsProdutos.filter(p => {
+                const titulo = (p.title || '').toLowerCase();
+                const corpo = (p.body || '').toLowerCase();
+                return titulo.includes(termo) || corpo.includes(termo);
+            });
+            renderizarProdutos(resultado);
+            document.querySelector('.products-section').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function abrirModal(index) {
+            const p = todosOsProdutos[index];
+            if(!p) return;
+
+            const tituloFormatado = p.title || 'Suplemento NutriCode';
+            
+            document.getElementById('modal-nome').innerText = tituloFormatado;
+            document.getElementById('modal-detalhes-tecnicos').innerText = p.detalhes ? `📦 ${p.detalhes}` : 'Nutrição Inteligente e Alta Performance';
+            document.getElementById('modal-descricao').innerHTML = p.body || "<p>Consulte nossos especialistas via WhatsApp para orientações sobre este produto.</p>";
+            
+            const imgPrincipal = p.image || 'imagens/uploads/logo.png';
+            document.getElementById('modal-imagem-principal').src = imgPrincipal;
+            
+            const thumbsContainer = document.getElementById('modal-thumbnails');
+            thumbsContainer.innerHTML = '';
+            
+            let listaFotos = [imgPrincipal];
+            
+            if(p.galeria && p.galeria.length > 0) {
+                p.galeria.forEach((imgObj) => {
+                    const urlImg = typeof imgObj === 'string' ? imgObj : imgObj.foto; 
+                    if(urlImg && !listaFotos.includes(urlImg)) {
+                        listaFotos.push(urlImg);
+                    }
+                });
+            }
+
+            if(listaFotos.length > 1) {
+                listaFotos.forEach((url, fIdx) => {
+                    const thumb = document.createElement('img');
+                    thumb.src = url;
+                    thumb.className = `thumb-img ${fIdx === 0 ? 'active' : ''}`;
+                    thumb.onclick = () => alternarFotoNova(url, fIdx);
+                    thumbsContainer.appendChild(thumb);
+                });
+            }
+
+            const textoWaProduto = `Olá! Gostaria de comprar ou tirar dúvidas sobre o produto: *${tituloFormatado}* (${p.detalhes || ''})`;
+            document.getElementById('modal-btn-wa').href = `https://wa.me/${WHATSAPP_NUMERO}?text=${encodeURIComponent(textoWaProduto)}`;
+            
+            document.getElementById('modal-detalhes').style.display = 'flex';
+            document.body.style.overflow = 'hidden'; 
+        }
+
+        function alternarFotoNova(urlImg, fIdx) {
+            if(urlImg) document.getElementById('modal-imagem-principal').src = urlImg;
+            document.querySelectorAll('.thumb-img').forEach((th, i) => th.classList.toggle('active', i === fIdx));
+        }
+
+        function fecharModal() { 
+            document.getElementById('modal-detalhes').style.display = 'none'; 
+            document.body.style.overflow = 'auto'; 
+        }
+
+        window.onclick = e => { 
+            if(e.target == document.getElementById('modal-detalhes')) fecharModal(); 
+        };
+
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape') fecharModal();
+        });
+
+        // Hero Slider
         const initSlider = () => {
             const slider = document.getElementById('slider');
             const slides = document.querySelectorAll('.slide');
+            if(!slider || slides.length === 0) return;
+            
             const totalSlides = slides.length;
             let currentSlide = 0;
 
@@ -658,183 +1023,14 @@
             }, 2500);
         };
 
-        // 2. DADOS DOS PRODUTOS
-        const produtosData = [
-            {
-                titulo: "Hepa Code",
-                imagem: "imagens/uploads/hepa-code.jpg",
-                categorias: ["multivitaminico"],
-                descricao: "Conheça o *Hepa Code*, um suplemento revolucionário formulado com extrato de semente de uva, L-metionina e um complexo de vitaminas e minerais essenciais para a sua saúde! Com zero carboidratos, o Hepa Code é ideal para quem busca um suporte nutricional completo sem comprometer a dieta. Este produto promove a desintoxicação do fígado, melhora a função imunológica e combate os radicais livres, graças às suas poderosas propriedades antioxidantes.",
-                detalhes: "Contém 60 cápsulas | Peso líquido 33g"
-            },
-            {
-                titulo: "Up Booster",
-                imagem: "imagens/uploads/up-booster.jpg",
-                categorias: ["precursor-hormonal", "ganho-de-massa"],
-                descricao: "Estimula produção natural de testosterona no organismo, exclusivo para Homens. Aumenta o ganho de massa magra.",
-                detalhes: "Contém 120 cápsulas | Peso líquido 84g | 60 doses"
-            },
-            {
-                titulo: "Ultimelaton",
-                imagem: "imagens/uploads/ultimelaton.jpg",
-                categorias: ["indutor-do-sono"],
-                descricao: "Precisando de uma noite de sono tranquila e revigorante! Conheça o novo Ultimelaton da Nutricode. Este suplemento natural não só regula o ciclo do sono, ajudando você a adormecer mais rápido e a ter um sono mais profundo, como também possui propriedades antioxidantes que combatem os radicais livres, promovendo um envelhecimento saudável. Além disso, a melatonina fortalece o sistema imunológico, ajudando a prevenir doenças e a manter seu corpo em equilíbrio. Experimente a melatonina e acorde renovado, pronto para enfrentar o dia com mais energia e disposição!",
-                detalhes: "Conteúdo 30ml"
-            },
-            {
-                titulo: "Serenity",
-                imagem: "imagens/uploads/serenity.jpg",
-                categorias: ["indutor-do-sono"],
-                descricao: "Anti ansiedade. Contribui para melhora da qualidade do sono e redução do estress. Produzido com magnésio bisglicinato, l-triptofano, zinco e mix de vitaminas.",
-                detalhes: "Contém 60 cápsulas | Peso líquido 28g"
-            },
-            {
-                titulo: "Orange Pic",
-                imagem: "imagens/uploads/orange-pic.jpg",
-                categorias: ["bloqueador-de-carboidrato", "termogenico"],
-                descricao: "A Nutricode lança no mercado o inovador *Orange PIC*, que traz a combinação perfeita de picolinato de cromo com laranja moro, desenvolvida para potencializar sua saúde e bem-estar! Este suplemento único ajuda a regular os níveis de açúcar no sangue, promovendo um metabolismo mais eficiente e auxiliando na perda de peso de forma natural. A laranja moro, rica em antioxidantes, combate os radicais livres e melhora a saúde cardiovascular. Com o Orange Pic, você terá mais energia e disposição para enfrentar o dia a dia, enquanto cuida do seu corpo de dentro para fora. Experimente e sinta a diferença!",
-                detalhes: "Conteúdo 30ml"
-            },
-            {
-                titulo: "Beauty Balance",
-                imagem: "imagens/uploads/beauty-balance.jpg",
-                categorias: ["multivitaminico"],
-                descricao: "Rico em minerais e vitaminas em uma quantidade adequada ao organismo. Rápida absorção dos nutrientes pelo organismo. Auxilia no crescimento capilar, das unhas e melhoramento da pele. Contém antioxidantes, evitando o envelhecimento precoce.",
-                detalhes: "Contém 30 gomas de 3,8 g | Peso líquido 114g"
-            },
-            {
-                titulo: "Alpha T",
-                imagem: "imagens/uploads/alpha-t.jpg",
-                categorias: ["termogenico"],
-                descricao: "Descubra os benefícios do incrível Alpha T, termogênico sem cafeína da Nutricode! Ideal para quem busca perder peso de forma saudável, este suplemento acelera o metabolismo e promove a queima de gordura sem os efeitos colaterais da cafeína, como insônia e ansiedade. Além disso, ele ajuda a controlar os níveis de colesterol e açúcar no sangue, contribuindo para uma saúde cardiovascular equilibrada. Com um termogênico sem cafeína, você pode alcançar seus objetivos de emagrecimento com mais disposição e bem-estar. Experimente e sinta a diferença na sua rotina diária.",
-                detalhes: "Termogênico sem cafeína"
-            },
-            {
-                titulo: "Thermo Pro",
-                imagem: "imagens/uploads/thermo-pro.jpg",
-                categorias: ["termogenico"],
-                descricao: "Potente termogênico à base de cafeína, taurina, triptofano, cromo e guaraná. Sua fórmula exclusiva além de estimular o metabolismo e o processo da queima de gordura, age reduzindo a vontade de comer doces.",
-                detalhes: "Contém 60 cápsulas, peso líquido 30g."
-            },
-            {
-                titulo: "Sleep Aid",
-                imagem: "imagens/uploads/sleep-aid.jpg",
-                categorias: ["indutor-do-sono"],
-                descricao: "Produto natural regulador do sono, com fórmula desenvolvida com exclusividade. Contém vitaminas e minerais nobres essenciais para saúde do sono, contendo precursores de melatonina.",
-                detalhes: "Contém 90 cápsulas, peso líquido 45g."
-            },
-            {
-                titulo: "Nutriblox",
-                imagem: "imagens/uploads/nutriblox.jpg",
-                categorias: ["bloqueador-de-carboidrato"],
-                descricao: "Com a união da quitosana, psyllium, cromo e L-triptofano sua formulação única auxilia no processo de perda de gorduras, modulação do sistema imunológico, melhora da motilidade instestinal e regulação dos níveis de colesterol.",
-                detalhes: "Contém 120 cápsulas, peso líquido 60g."
-            },
-            {
-                titulo: "Lipo Attack",
-                imagem: "imagens/uploads/lipo-attack.jpg",
-                categorias: ["termogenico", "bloqueador-de-carboidrato"],
-                descricao: "Termogênico para acelerar seu metabolismo (sem o uso de cafeína na sua formula) Termogênico ideal para pessoas sensíveis a Cafeína. Atua reduzindo a absorção de gorduras e facilita o seu transporte para a queima dentro das células.",
-                detalhes: "45 gramas | 90 capsulas"
-            },
-            {
-                titulo: "Immuno Up",
-                imagem: "imagens/uploads/immuno-up.jpg",
-                categorias: ["multivitaminico"],
-                descricao: "Repositor multivitamínico indicado para indivíduos em dietas controladas, de forma a garantir bem-estar físico evitando o déficit de vitaminas.",
-                detalhes: "Peso Liquido 45 gramas. Contém 90 cápsulas"
-            },
-            {
-                titulo: "Extreme Whey Chocolate",
-                imagem: "imagens/uploads/whey-chocolate.jpg",
-                categorias: ["proteina", "ganho-de-massa"],
-                descricao: "Whey proteín e aminoácidos advindos do soro do leite garantindo aporte proteico e de anti-corpos que vão acelerar sua recuperação muscular. Tudo isso unido a um mix de sabores inigualáveis!",
-                detalhes: "900 gramas"
-            },
-            {
-                titulo: "Extreme Whey Baunilha",
-                imagem: "imagens/uploads/whey-baunilha.jpg",
-                categorias: ["proteina", "ganho-de-massa"],
-                descricao: "Whey proteín e aminoácidos advindos do soro do leite garantindo aporte proteico e de anti-corpos que vão acelerar sua recuperação muscular. Tudo isso unido a um mix de sabores inigualáveis!",
-                detalhes: "900 gramas"
-            },
-            {
-                titulo: "Energy Mix",
-                imagem: "imagens/uploads/energy-mix.jpg",
-                categorias: ["pre-treino", "ganho-de-massa"],
-                descricao: "Potente e exclusivo Mix que associa a creatina micronizada com palatinose, ribose, piroxidina e cobalamina garantindo maior velocidade de recuperação e potência muscular.",
-                detalhes: "300g."
-            }
-        ];
+        document.addEventListener('DOMContentLoaded', () => {
+            initSlider();
+            inicializarSite();
 
-        // 3. RENDERIZAÇÃO E CROSS-FILTERING
-        const initProdutos = () => {
-            const container = document.getElementById('produtos-container');
-            const botoesFiltro = document.querySelectorAll('.filtro-btn');
-            const linksMenu = document.querySelectorAll('.nav-link');
-
-            const renderizarProdutos = () => {
-                container.innerHTML = '';
-                produtosData.forEach(produto => {
-                    const stringCategorias = produto.categorias.join(',');
-                    const card = document.createElement('article');
-                    card.className = 'card-produto';
-                    card.setAttribute('data-categorias', stringCategorias);
-                    
-                    card.innerHTML = `
-                        <img src="${produto.imagem}" alt="${produto.titulo}" class="img-produto" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'100%\\' height=\\'100%\\'><rect width=\\'100%\\' height=\\'100%\\' fill=\\'#111\\'/><text x=\\'50%\\' y=\\'50%\\' fill=\\'#555\\' font-family=\\'Arial\\' font-size=\\'14\\' text-anchor=\\'middle\\' dominant-baseline=\\'middle\\'>Imagem do Produto</text></svg>'">
-                        <h3>${produto.titulo}</h3>
-                        <p class="desc">${produto.descricao}</p>
-                        <div class="details">${produto.detalhes}</div>
-                        <button class="btn-comprar">Comprar</button>
-                    `;
-                    container.appendChild(card);
-                });
-            };
-
-            const aplicarFiltro = (filtro) => {
-                const cards = document.querySelectorAll('.card-produto');
-                
-                cards.forEach(card => {
-                    const categoriasProduto = card.getAttribute('data-categorias');
-                    if (filtro === 'todos' || categoriasProduto.includes(filtro)) {
-                        card.classList.remove('oculto');
-                    } else {
-                        card.classList.add('oculto');
-                    }
-                });
-
-                botoesFiltro.forEach(b => {
-                    if (b.getAttribute('data-filter') === filtro) {
-                        b.classList.add('ativo');
-                    } else {
-                        b.classList.remove('ativo');
-                    }
-                });
-            };
-
-            botoesFiltro.forEach(botao => {
-                botao.addEventListener('click', (e) => {
-                    const filtro = e.target.getAttribute('data-filter');
-                    aplicarFiltro(filtro);
-                });
+            document.getElementById('search-input').addEventListener('keyup', (e) => {
+                if (e.key === 'Enter') executarBusca();
             });
-
-            linksMenu.forEach(link => {
-                link.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    const filtro = e.target.getAttribute('data-target');
-                    aplicarFiltro(filtro);
-                    document.querySelector('.products-section').scrollIntoView({ behavior: 'smooth' });
-                });
-            });
-
-            renderizarProdutos();
-        };
-
-        // Inicialização
-        initSlider();
-        initProdutos();
+        });
     </script>
 </body>
 </html>

@@ -1,21 +1,17 @@
-media:
-  input: imagens/uploads
-  output: /imagens/uploads
+media: imagens/uploads
 
 content:
   - name: produtos
     label: Produtos NutriCode
     type: collection
     folder: content/produtos
-    extension: md
-    format: frontmatter
     fields:
       - name: title
         label: Nome do Suplemento
         type: string
         required: true
       - name: image
-        label: Imagem do Produto
+        label: Imagem
         type: image
         required: true
       - name: detalhes
@@ -23,26 +19,8 @@ content:
         type: string
         required: true
       - name: categorias
-        label: Categorias (Selecione uma ou mais)
-        type: select
-        multiple: true
-        options:
-          - label: Bloqueador de Carboidrato
-            value: bloqueador-de-carboidrato
-          - label: Ganho de Massa
-            value: ganho-de-massa
-          - label: Indutor do Sono
-            value: indutor-do-sono
-          - label: Multivitamínico
-            value: multivitaminico
-          - label: Pré Treino
-            value: pre-treino
-          - label: Precursor Hormonal
-            value: precursor-hormonal
-          - label: Proteína
-            value: proteina
-          - label: Termogênico
-            value: termogenico
+        label: Categorias (Adicione as tags. Ex: ganho-de-massa, proteina)
+        type: list
       - name: body
         label: Descrição de Vendas (Copy)
         type: rich-text

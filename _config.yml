@@ -1,0 +1,4 @@
+collections:
+  produtos:
+    output: false
+    folder: content/produtos

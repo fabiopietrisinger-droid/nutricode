@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NutriCode | Nutrição Inteligente</title>
+    <style>
+        :root {
+            /* Paleta de Cores High-Tech */
+            --bg-body: #0d0d0d;
+            --bg-header: #141414;
+            --bg-search: #222222;
+            --bg-card: #1a1a1a;
+            --text-main: #ffffff;
+            --text-muted: #a0a0a0;
+            --accent-color: #23CFE7; /* Ciano Base */
+            --accent-hover: #1ab5cc;
+            --btn-text: #000000;
+            --whatsapp-green: #25D366;
+            
+            /* Espaçamentos */
+            --space-xs: 8px;
+            --space-sm: 16px;
+            --space-md: 32px;
+            --space-lg: 64px;
+            --space-xl: 120px;
+            
+            /* Tipografia */
+            --font-family: 'Helvetica Neue', Arial, sans-serif;
+            --radius: 8px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            font-family: var(--font-family);
+            -webkit-font-smoothing: antialiased;
+            line-height: 1.6;
+        }
+
+        a {
+            color: var(--text-main);
+            text-decoration: none;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 5%;
+        }
+
+        /* --- CABEÇALHO --- */
+        .header-top {
+            background-color: var(--bg-header);
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #2a2a2a;
+        }
+
+        .logo img {
+            max-height: 70px; 
+            width: auto;
+            display: block;
+        }
+
+        .search-container {
+            display: flex;
+            width: 100%;
+            max-width: 500px;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px 20px;
+            border-radius: 30px;
+            border: 1px solid #333;
+            background-color: var(--bg-search);
+            color: var(--text-main);
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .search-input:focus {
+            border-color: var(--accent-color);
+        }
+
+        .search-btn {
+            position: absolute;
+            right: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: var(--accent-color);
+            color: var(--btn-text);
+            border: none;
+            border-radius: 30px;
+            padding: 8px 20px;
+            font-weight: 900;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .search-btn:hover {
+            background-color: var(--accent-hover);
+        }
+
+        /* --- MENU --- */
+        .header-nav {
+            background-color: var(--bg-body);
+            padding: 15px 5%;
+            border-bottom: 1px solid #2a2a2a;
+            overflow-x: auto;
+            white-space: nowrap;
+            scrollbar-width: none; 
+            -ms-overflow-style: none;
+        }
+
+        .header-nav::-webkit-scrollbar {
+            display: none;
+        }
+
+        .header-nav ul {
+            list-style: none;
+            display: flex;
+            gap: 24px;
+            justify-content: center;
+        }
+
+        .header-nav ul li a {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            transition: color 0.3s;
+        }
+
+        .header-nav ul li a:hover {
+            color: var(--accent-color);
+        }
+
+        @media (max-width: 768px) {
+            .header-top { flex-direction: column; gap: 20px; }
+            .header-nav ul { justify-content: flex-start; }
+        }
+
+        /* --- HERO SLIDER --- */
+        .hero-slider-wrapper {
+            width: 100%;
+            height: 60vh;
+            min-height: 400px;
+            position: relative;
+            overflow: hidden;
+            background-color: #000;
+        }
+
+        .hero-slider-container {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.8s ease-in-out;
+        }
+
+        .slide {
+            min-width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.5;
+        }
+
+        .slide-content {
+            position: absolute;
+            top: 50%;
+            left: 5%;
+            transform: translateY(-50%);
+            max-width: 800px;
+            z-index: 10;
+        }
+
+        .slide-content h2 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 900;
+            text-transform: uppercase;
+            line-height: 1.1;
+            color: #ffffff;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.9);
+        }
+
+        /* --- SEÇÃO DE PRODUTOS --- */
+        .products-section {
+            padding: var(--space-lg) 0;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            text-transform: uppercase;
+            margin-bottom: 40px;
+            font-weight: 900;
+        }
+
+        /* --- FILTROS --- */
+        .filtro-painel {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            padding: 0 0 32px 0;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .filtro-painel::-webkit-scrollbar {
+            display: none;
+        }
+
+        .filtro-btn {
+            background-color: var(--bg-card);
+            color: var(--text-muted);
+            border: 1px solid #333;
+            padding: 10px 24px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            white-space: nowrap;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filtro-btn.ativo, .filtro-btn:hover {
+            background-color: var(--accent-color);
+            color: var(--btn-text);
+            border-color: var(--accent-color);
+            box-shadow: 0 4px 15px rgba(35, 207, 231, 0.2);
+        }
+
+        /* --- GRID DE PRODUTOS --- */
+        .grid-produtos {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .card-produto {
+            background-color: var(--bg-card);
+            border-radius: var(--radius);
+            padding: 24px;
+            border: 1px solid #2a2a2a;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease, border-color 0.3s ease, opacity 0.4s ease;
+        }
+
+        .card-produto.oculto {
+            display: none;
+            opacity: 0;
+        }
+
+        .card-produto:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-color);
+        }
+
+        .img-produto {
+            width: 100%;
+            height: 200px;
+            background-color: #111;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            object-fit: cover;
+        }
+
+        .card-produto h3 {
+            font-size: 1.4rem;
+            margin-bottom: 12px;
+            color: var(--accent-color);
+            text-transform: uppercase;
+        }
+
+        .card-produto p.desc {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 16px;
+            flex-grow: 1;
+        }
+
+        .card-produto .details {
+            font-size: 0.85rem;
+            font-weight: bold;
+            background: #222;
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 24px;
+            color: #ddd;
+        }
+
+        .btn-comprar {
+            background-color: var(--accent-color);
+            color: var(--btn-text);
+            text-align: center;
+            padding: 14px 24px;
+            border-radius: var(--radius);
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: background-color 0.3s;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .btn-comprar:hover {
+            background-color: var(--accent-hover);
+        }
+
+        /* --- SEÇÃO SOBRE (SPLIT LAYOUT & GLASSMORPHISM) --- */
+        .about-modern {
+            position: relative;
+            padding: var(--space-xl) 0;
+            background-color: #050505;
+            overflow: hidden;
+            border-top: 1px solid #1a1a1a;
+            border-bottom: 1px solid #1a1a1a;
+        }
+
+        .about-glow {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(35, 207, 231, 0.15) 0%, rgba(0,0,0,0) 70%);
+            top: -150px;
+            left: -150px;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-lg);
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .about-title-wrapper {
+            padding-right: var(--space-md);
+        }
+
+        .about-badge {
+            display: inline-block;
+            padding: 6px 16px;
+            border: 1px solid var(--accent-color);
+            color: var(--accent-color);
+            font-size: 0.85rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-radius: 30px;
+            margin-bottom: var(--space-sm);
+            box-shadow: 0 0 15px rgba(35, 207, 231, 0.2);
+        }
+
+        .about-title-wrapper h2 {
+            font-size: clamp(2.5rem, 4vw, 4rem);
+            line-height: 1;
+            font-weight: 900;
+            text-transform: uppercase;
+            margin-bottom: var(--space-sm);
+        }
+
+        .about-title-wrapper h2 span {
+            color: var(--accent-color);
+        }
+
+        .about-title-wrapper h3 {
+            font-size: 1.5rem;
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+
+        .about-text-panel {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-left: 4px solid var(--accent-color);
+            padding: var(--space-md);
+            border-radius: var(--radius);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .about-text-panel p {
+            color: #d0d0d0;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: var(--space-sm);
+        }
+
+        .about-text-panel p:last-child {
+            margin-bottom: 0;
+            color: var(--text-main);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        @media (max-width: 900px) {
+            .about-grid {
+                grid-template-columns: 1fr;
+                gap: var(--space-md);
+            }
+            .about-title-wrapper {
+                padding-right: 0;
+                text-align: center;
+            }
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background-color: var(--bg-header);
+            padding: var(--space-lg) 0 var(--space-md) 0;
+            border-top: 1px solid #2a2a2a;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--space-md);
+            margin-bottom: var(--space-md);
+        }
+
+        .footer-col h4 {
+            color: var(--text-main);
+            font-size: 1.2rem;
+            margin-bottom: var(--space-sm);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .footer-menu {
+            list-style: none;
+        }
+
+        .footer-menu li {
+            margin-bottom: 12px;
+        }
+
+        .footer-menu a {
+            color: var(--text-muted);
+            transition: color 0.3s;
+            font-size: 0.95rem;
+        }
+
+        .footer-menu a:hover {
+            color: var(--accent-color);
+        }
+
+        .whatsapp-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background-color: var(--whatsapp-green);
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: transform 0.3s, box-shadow 0.3s;
+            margin-top: 10px;
+        }
+
+        .whatsapp-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3);
+            color: #fff;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: var(--space-md);
+            border-top: 1px solid #2a2a2a;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- CABEÇALHO -->
+    <header>
+        <div class="header-top">
+            <div class="logo">
+                <a href="#">
+                    <img src="imagens/uploads/logo.png" alt="NutriCode Logo" onerror="this.outerHTML='Nutri<span style=\'color: var(--accent-color);\'>Code</span>'">
+                </a>
+            </div>
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="Busque por suplementos...">
+                <button class="search-btn">Buscar</button>
+            </div>
+        </div>
+        
+        <nav class="header-nav">
+            <ul>
+                <li><a href="#" class="nav-link" data-target="bloqueador-de-carboidrato">Bloqueador de Carboidrato</a></li>
+                <li><a href="#" class="nav-link" data-target="ganho-de-massa">Ganho de Massa</a></li>
+                <li><a href="#" class="nav-link" data-target="indutor-do-sono">Indutor do Sono</a></li>
+                <li><a href="#" class="nav-link" data-target="multivitaminico">Multivitamínico</a></li>
+                <li><a href="#" class="nav-link" data-target="pre-treino">Pré Treino</a></li>
+                <li><a href="#" class="nav-link" data-target="precursor-hormonal">Precursor Hormonal</a></li>
+                <li><a href="#" class="nav-link" data-target="proteina">Proteína</a></li>
+                <li><a href="#" class="nav-link" data-target="termogenico">Termogênico</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- HERO SLIDER -->
+        <section class="hero-slider-wrapper">
+            <div class="hero-slider-container" id="slider">
+                <div class="slide">
+                    <img src="imagens/uploads/hero01.jpg" alt="Banner 1" onerror="this.style.display='none'">
+                    <div class="slide-content">
+                        <h2>Seus melhores momentos são agora</h2>
+                    </div>
+                </div>
+                <div class="slide">
+                    <img src="imagens/uploads/hero02.jpg" alt="Banner 2" onerror="this.style.display='none'">
+                    <div class="slide-content">
+                        <h2>Potencialize seu desempenho</h2>
+                    </div>
+                </div>
+                <div class="slide">
+                    <img src="imagens/uploads/hero03.jpg" alt="Banner 3" onerror="this.style.display='none'">
+                    <div class="slide-content">
+                        <h2>Sua saúde é seu maior bem</h2>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PRODUTOS E FILTROS -->
+        <section class="products-section container">
+            <h2 class="section-title">Nossa linha de produtos</h2>
+            
+            <div class="filtro-painel">
+                <button class="filtro-btn ativo" data-filter="todos">Todos</button>
+                <button class="filtro-btn" data-filter="bloqueador-de-carboidrato">Bloqueador de Carboidrato</button>
+                <button class="filtro-btn" data-filter="ganho-de-massa">Ganho de Massa</button>
+                <button class="filtro-btn" data-filter="indutor-do-sono">Indutor do Sono</button>
+                <button class="filtro-btn" data-filter="multivitaminico">Multivitamínico</button>
+                <button class="filtro-btn" data-filter="pre-treino">Pré Treino</button>
+                <button class="filtro-btn" data-filter="precursor-hormonal">Precursor Hormonal</button>
+                <button class="filtro-btn" data-filter="proteina">Proteína</button>
+                <button class="filtro-btn" data-filter="termogenico">Termogênico</button>
+            </div>
+
+            <div class="grid-produtos" id="produtos-container">
+                <!-- Cards gerados via JS -->
+            </div>
+        </section>
+
+        <!-- SOBRE NÓS -->
+        <section class="about-modern">
+            <div class="about-glow"></div>
+            <div class="container about-grid">
+                <div class="about-title-wrapper">
+                    <div class="about-badge">Desde 2013</div>
+                    <h2>Nutri<span style="color: var(--accent-color);">Code</span></h2>
+                    <h3>Inovação e Ciência a favor do seu corpo.</h3>
+                </div>
+                <div class="about-text-panel">
+                    <p>Acreditamos que suplementação vai muito além de um simples complemento alimentar. Desde 2013, desenvolvemos produtos de qualidade premium, combinando ingredientes seguros, sabores incríveis e resultados que fazem a diferença no seu dia a dia.</p>
+                    <p>Seja para quem busca mais saúde e bem-estar ou para atletas que querem melhorar sua performance, estamos aqui para ajudar você a alcançar seus objetivos com confiança e equilíbrio.</p>
+                    <p>Cuide do seu corpo com quem entende de suplementação inteligente. Você merece o melhor!</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- RODAPÉ -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                
+                <!-- Coluna 1: Marca -->
+                <div class="footer-col">
+                    <div class="logo" style="margin-bottom: 16px;">
+                        <img src="imagens/uploads/logo.png" alt="NutriCode Logo" style="max-height: 60px;" onerror="this.outerHTML='<h2 style=\'font-size: 1.8rem; font-weight: 900; text-transform: uppercase;\'>Nutri<span style=\'color: var(--accent-color);\'>Code</span></h2>'">
+                    </div>
+                    <p style="color: var(--text-muted); font-size: 0.95rem;">Nutrição Inteligente e Suplementação de Alta Performance para você alcançar seus melhores resultados.</p>
+                </div>
+
+                <!-- Coluna 2: Menu de Categorias -->
+                <div class="footer-col">
+                    <h4>Categorias</h4>
+                    <ul class="footer-menu">
+                        <li><a href="#" class="nav-link" data-target="bloqueador-de-carboidrato">Bloqueador de Carboidrato</a></li>
+                        <li><a href="#" class="nav-link" data-target="ganho-de-massa">Ganho de Massa</a></li>
+                        <li><a href="#" class="nav-link" data-target="indutor-do-sono">Indutor do Sono</a></li>
+                        <li><a href="#" class="nav-link" data-target="multivitaminico">Multivitamínico</a></li>
+                        <li><a href="#" class="nav-link" data-target="pre-treino">Pré Treino</a></li>
+                        <li><a href="#" class="nav-link" data-target="precursor-hormonal">Precursor Hormonal</a></li>
+                        <li><a href="#" class="nav-link" data-target="proteina">Proteína</a></li>
+                        <li><a href="#" class="nav-link" data-target="termogenico">Termogênico</a></li>
+                    </ul>
+                </div>
+
+                <!-- Coluna 3: Contato -->
+                <div class="footer-col">
+                    <h4>Entre em Contato</h4>
+                    <p style="color: var(--text-muted); margin-bottom: 16px; font-size: 0.95rem;">Fale com nossos especialistas para tirar dúvidas ou finalizar seu pedido.</p>
+                    <a href="https://wa.me/5511982092987" target="_blank" class="whatsapp-btn">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a5.358 5.358 0 00-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                        </svg>
+                        (11) 98209-2987
+                    </a>
+                </div>
+
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2026 NutriCode. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- SCRIPTS -->
+    <script>
+        // 1. LÓGICA DO HERO SLIDER
+        const initSlider = () => {
+            const slider = document.getElementById('slider');
+            const slides = document.querySelectorAll('.slide');
+            const totalSlides = slides.length;
+            let currentSlide = 0;
+
+            setInterval(() => {
+                currentSlide++;
+                if (currentSlide >= totalSlides) currentSlide = 0;
+                slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+            }, 2500);
+        };
+
+        // 2. DADOS DOS PRODUTOS
+        const produtosData = [
+            {
+                titulo: "Hepa Code",
+                imagem: "imagens/uploads/hepa-code.jpg",
+                categorias: ["multivitaminico"],
+                descricao: "Conheça o *Hepa Code*, um suplemento revolucionário formulado com extrato de semente de uva, L-metionina e um complexo de vitaminas e minerais essenciais para a sua saúde! Com zero carboidratos, o Hepa Code é ideal para quem busca um suporte nutricional completo sem comprometer a dieta. Este produto promove a desintoxicação do fígado, melhora a função imunológica e combate os radicais livres, graças às suas poderosas propriedades antioxidantes.",
+                detalhes: "Contém 60 cápsulas | Peso líquido 33g"
+            },
+            {
+                titulo: "Up Booster",
+                imagem: "imagens/uploads/up-booster.jpg",
+                categorias: ["precursor-hormonal", "ganho-de-massa"],
+                descricao: "Estimula produção natural de testosterona no organismo, exclusivo para Homens. Aumenta o ganho de massa magra.",
+                detalhes: "Contém 120 cápsulas | Peso líquido 84g | 60 doses"
+            },
+            {
+                titulo: "Ultimelaton",
+                imagem: "imagens/uploads/ultimelaton.jpg",
+                categorias: ["indutor-do-sono"],
+                descricao: "Precisando de uma noite de sono tranquila e revigorante! Conheça o novo Ultimelaton da Nutricode. Este suplemento natural não só regula o ciclo do sono, ajudando você a adormecer mais rápido e a ter um sono mais profundo, como também possui propriedades antioxidantes que combatem os radicais livres, promovendo um envelhecimento saudável. Além disso, a melatonina fortalece o sistema imunológico, ajudando a prevenir doenças e a manter seu corpo em equilíbrio. Experimente a melatonina e acorde renovado, pronto para enfrentar o dia com mais energia e disposição!",
+                detalhes: "Conteúdo 30ml"
+            },
+            {
+                titulo: "Serenity",
+                imagem: "imagens/uploads/serenity.jpg",
+                categorias: ["indutor-do-sono"],
+                descricao: "Anti ansiedade. Contribui para melhora da qualidade do sono e redução do estress. Produzido com magnésio bisglicinato, l-triptofano, zinco e mix de vitaminas.",
+                detalhes: "Contém 60 cápsulas | Peso líquido 28g"
+            },
+            {
+                titulo: "Orange Pic",
+                imagem: "imagens/uploads/orange-pic.jpg",
+                categorias: ["bloqueador-de-carboidrato", "termogenico"],
+                descricao: "A Nutricode lança no mercado o inovador *Orange PIC*, que traz a combinação perfeita de picolinato de cromo com laranja moro, desenvolvida para potencializar sua saúde e bem-estar! Este suplemento único ajuda a regular os níveis de açúcar no sangue, promovendo um metabolismo mais eficiente e auxiliando na perda de peso de forma natural. A laranja moro, rica em antioxidantes, combate os radicais livres e melhora a saúde cardiovascular. Com o Orange Pic, você terá mais energia e disposição para enfrentar o dia a dia, enquanto cuida do seu corpo de dentro para fora. Experimente e sinta a diferença!",
+                detalhes: "Conteúdo 30ml"
+            },
+            {
+                titulo: "Beauty Balance",
+                imagem: "imagens/uploads/beauty-balance.jpg",
+                categorias: ["multivitaminico"],
+                descricao: "Rico em minerais e vitaminas em uma quantidade adequada ao organismo. Rápida absorção dos nutrientes pelo organismo. Auxilia no crescimento capilar, das unhas e melhoramento da pele. Contém antioxidantes, evitando o envelhecimento precoce.",
+                detalhes: "Contém 30 gomas de 3,8 g | Peso líquido 114g"
+            },
+            {
+                titulo: "Alpha T",
+                imagem: "imagens/uploads/alpha-t.jpg",
+                categorias: ["termogenico"],
+                descricao: "Descubra os benefícios do incrível Alpha T, termogênico sem cafeína da Nutricode! Ideal para quem busca perder peso de forma saudável, este suplemento acelera o metabolismo e promove a queima de gordura sem os efeitos colaterais da cafeína, como insônia e ansiedade. Além disso, ele ajuda a controlar os níveis de colesterol e açúcar no sangue, contribuindo para uma saúde cardiovascular equilibrada. Com um termogênico sem cafeína, você pode alcançar seus objetivos de emagrecimento com mais disposição e bem-estar. Experimente e sinta a diferença na sua rotina diária.",
+                detalhes: "Termogênico sem cafeína"
+            },
+            {
+                titulo: "Thermo Pro",
+                imagem: "imagens/uploads/thermo-pro.jpg",
+                categorias: ["termogenico"],
+                descricao: "Potente termogênico à base de cafeína, taurina, triptofano, cromo e guaraná. Sua fórmula exclusiva além de estimular o metabolismo e o processo da queima de gordura, age reduzindo a vontade de comer doces.",
+                detalhes: "Contém 60 cápsulas, peso líquido 30g."
+            },
+            {
+                titulo: "Sleep Aid",
+                imagem: "imagens/uploads/sleep-aid.jpg",
+                categorias: ["indutor-do-sono"],
+                descricao: "Produto natural regulador do sono, com fórmula desenvolvida com exclusividade. Contém vitaminas e minerais nobres essenciais para saúde do sono, contendo precursores de melatonina.",
+                detalhes: "Contém 90 cápsulas, peso líquido 45g."
+            },
+            {
+                titulo: "Nutriblox",
+                imagem: "imagens/uploads/nutriblox.jpg",
+                categorias: ["bloqueador-de-carboidrato"],
+                descricao: "Com a união da quitosana, psyllium, cromo e L-triptofano sua formulação única auxilia no processo de perda de gorduras, modulação do sistema imunológico, melhora da motilidade instestinal e regulação dos níveis de colesterol.",
+                detalhes: "Contém 120 cápsulas, peso líquido 60g."
+            },
+            {
+                titulo: "Lipo Attack",
+                imagem: "imagens/uploads/lipo-attack.jpg",
+                categorias: ["termogenico", "bloqueador-de-carboidrato"],
+                descricao: "Termogênico para acelerar seu metabolismo (sem o uso de cafeína na sua formula) Termogênico ideal para pessoas sensíveis a Cafeína. Atua reduzindo a absorção de gorduras e facilita o seu transporte para a queima dentro das células.",
+                detalhes: "45 gramas | 90 capsulas"
+            },
+            {
+                titulo: "Immuno Up",
+                imagem: "imagens/uploads/immuno-up.jpg",
+                categorias: ["multivitaminico"],
+                descricao: "Repositor multivitamínico indicado para indivíduos em dietas controladas, de forma a garantir bem-estar físico evitando o déficit de vitaminas.",
+                detalhes: "Peso Liquido 45 gramas. Contém 90 cápsulas"
+            },
+            {
+                titulo: "Extreme Whey Chocolate",
+                imagem: "imagens/uploads/whey-chocolate.jpg",
+                categorias: ["proteina", "ganho-de-massa"],
+                descricao: "Whey proteín e aminoácidos advindos do soro do leite garantindo aporte proteico e de anti-corpos que vão acelerar sua recuperação muscular. Tudo isso unido a um mix de sabores inigualáveis!",
+                detalhes: "900 gramas"
+            },
+            {
+                titulo: "Extreme Whey Baunilha",
+                imagem: "imagens/uploads/whey-baunilha.jpg",
+                categorias: ["proteina", "ganho-de-massa"],
+                descricao: "Whey proteín e aminoácidos advindos do soro do leite garantindo aporte proteico e de anti-corpos que vão acelerar sua recuperação muscular. Tudo isso unido a um mix de sabores inigualáveis!",
+                detalhes: "900 gramas"
+            },
+            {
+                titulo: "Energy Mix",
+                imagem: "imagens/uploads/energy-mix.jpg",
+                categorias: ["pre-treino", "ganho-de-massa"],
+                descricao: "Potente e exclusivo Mix que associa a creatina micronizada com palatinose, ribose, piroxidina e cobalamina garantindo maior velocidade de recuperação e potência muscular.",
+                detalhes: "300g."
+            }
+        ];
+
+        // 3. RENDERIZAÇÃO E CROSS-FILTERING
+        const initProdutos = () => {
+            const container = document.getElementById('produtos-container');
+            const botoesFiltro = document.querySelectorAll('.filtro-btn');
+            const linksMenu = document.querySelectorAll('.nav-link');
+
+            const renderizarProdutos = () => {
+                container.innerHTML = '';
+                produtosData.forEach(produto => {
+                    const stringCategorias = produto.categorias.join(',');
+                    const card = document.createElement('article');
+                    card.className = 'card-produto';
+                    card.setAttribute('data-categorias', stringCategorias);
+                    
+                    card.innerHTML = `
+                        <img src="${produto.imagem}" alt="${produto.titulo}" class="img-produto" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'100%\\' height=\\'100%\\'><rect width=\\'100%\\' height=\\'100%\\' fill=\\'#111\\'/><text x=\\'50%\\' y=\\'50%\\' fill=\\'#555\\' font-family=\\'Arial\\' font-size=\\'14\\' text-anchor=\\'middle\\' dominant-baseline=\\'middle\\'>Imagem do Produto</text></svg>'">
+                        <h3>${produto.titulo}</h3>
+                        <p class="desc">${produto.descricao}</p>
+                        <div class="details">${produto.detalhes}</div>
+                        <button class="btn-comprar">Comprar</button>
+                    `;
+                    container.appendChild(card);
+                });
+            };
+
+            const aplicarFiltro = (filtro) => {
+                const cards = document.querySelectorAll('.card-produto');
+                
+                cards.forEach(card => {
+                    const categoriasProduto = card.getAttribute('data-categorias');
+                    if (filtro === 'todos' || categoriasProduto.includes(filtro)) {
+                        card.classList.remove('oculto');
+                    } else {
+                        card.classList.add('oculto');
+                    }
+                });
+
+                botoesFiltro.forEach(b => {
+                    if (b.getAttribute('data-filter') === filtro) {
+                        b.classList.add('ativo');
+                    } else {
+                        b.classList.remove('ativo');
+                    }
+                });
+            };
+
+            botoesFiltro.forEach(botao => {
+                botao.addEventListener('click', (e) => {
+                    const filtro = e.target.getAttribute('data-filter');
+                    aplicarFiltro(filtro);
+                });
+            });
+
+            linksMenu.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const filtro = e.target.getAttribute('data-target');
+                    aplicarFiltro(filtro);
+                    document.querySelector('.products-section').scrollIntoView({ behavior: 'smooth' });
+                });
+            });
+
+            renderizarProdutos();
+        };
+
+        // Inicialização
+        initSlider();
+        initProdutos();
+    </script>
+</body>
+</html>

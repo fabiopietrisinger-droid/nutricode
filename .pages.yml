@@ -9,7 +9,7 @@ content:
     folder: content/produtos
     extension: md
     format: frontmatter
-    slug: '{{slug}}'
+    slug: '{{titulo}}'
     fields:
       - name: titulo
         label: Nome do Suplemento

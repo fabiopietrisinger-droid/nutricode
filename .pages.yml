@@ -17,7 +17,7 @@ content:
       - name: "categorias"
         label: "Categorias"
         type: "select"
-        multiple: true
+        list: true
         options:
           values:
             - "bloqueador-de-carboidrato"

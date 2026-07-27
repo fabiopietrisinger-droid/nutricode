@@ -1,4 +1,3 @@
 collections:
-  suplementos:
+  produtos:
     output: false
-    folder: content/suplementos

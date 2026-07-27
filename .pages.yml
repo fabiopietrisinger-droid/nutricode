@@ -3,10 +3,10 @@ media:
   public: imagens/uploads
 
 content:
-  - name: suplementos
-    label: Suplementos NutriCode
+  - name: produtos
+    label: Produtos NutriCode
     type: collection
-    folder: content/suplementos
+    folder: content
     extension: md
     format: frontmatter
     slug: '{{title}}'
@@ -15,7 +15,7 @@ content:
         label: Nome do Suplemento
         type: string
         required: true
-      - name: image
+      - name: imagem
         label: Imagem do Produto
         type: image
         required: true
@@ -24,7 +24,7 @@ content:
         type: string
         required: true
       - name: categorias
-        label: Categorias
+        label: Categorias (Selecione uma ou mais)
         type: select
         multiple: true
         options:

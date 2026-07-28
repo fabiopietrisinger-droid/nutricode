@@ -1,5 +1,6 @@
 ---
 title: Up Booster
+ativo: false
 detalhes: Contém 120 cápsulas  Peso líquido 84g  60 doses
 categorias:
   - precursor-hormonal

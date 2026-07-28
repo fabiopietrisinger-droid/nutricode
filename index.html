@@ -211,8 +211,8 @@
             }
 
             .header-cta-btn {
-                padding: 10px 18px;
-                font-size: 0.8rem;
+                padding: 10px 14px;
+                font-size: 0.75rem;
             }
 
             .hamburger-btn {
@@ -228,6 +228,7 @@
                 background-color: #141414;
                 border-bottom: 1px solid #2a2a2a;
                 box-shadow: 0 10px 30px rgba(0, 0, 0, 0.9);
+                z-index: 1000;
             }
 
             .header-nav.active {
@@ -253,7 +254,7 @@
                 display: block;
                 padding: 14px 20px;
                 border-bottom: 1px solid #222;
-                font-size: 0.95rem;
+                font-size: 0.9rem;
                 text-align: center;
             }
 
@@ -323,7 +324,7 @@
             font-weight: 900;
         }
 
-        /* --- FILTROS 100% RESPONSIVOS E ANTI-QUEBRA (MOBILE RE-ENGINEERED) --- */
+        /* --- FILTROS 100% RESPONSIVOS E ANTI-QUEBRA --- */
         .filtro-painel-wrapper {
             width: 100%;
             margin-bottom: 32px;
@@ -339,12 +340,12 @@
             padding: 8px 0 16px 0;
             width: 100%;
             -webkit-overflow-scrolling: touch;
-            scrollbar-width: none; /* Firefox */
-            -ms-overflow-style: none; /* IE/Edge */
+            scrollbar-width: none;
+            -ms-overflow-style: none;
         }
 
         .filtro-painel::-webkit-scrollbar {
-            display: none; /* Chrome/Safari */
+            display: none;
         }
 
         .filtro-btn {
@@ -359,7 +360,7 @@
             white-space: nowrap;
             cursor: pointer;
             transition: all 0.3s ease;
-            flex: 0 0 auto; /* Impede esmagamento e quebra de linha em qualquer dispositivo */
+            flex: 0 0 auto;
             user-select: none;
         }
 
@@ -370,7 +371,6 @@
             box-shadow: 0 4px 15px rgba(35, 207, 231, 0.25);
         }
 
-        /* Ajuste de margens laterais sangradas para rolar perfeitamente no celular */
         @media (max-width: 900px) {
             .filtro-painel-wrapper {
                 margin-left: -5%;
@@ -530,7 +530,7 @@
             }
         }
 
-        /* --- MODAL / POPUP DE DETALHES --- */
+        /* --- MODAL / POPUP BLINDADO CONTRA ESTOUROS NO MOBILE --- */
         .modal-overlay {
             position: fixed;
             inset: 0;
@@ -540,27 +540,29 @@
             display: none;
             justify-content: center;
             align-items: center;
-            z-index: 1000;
-            padding: 20px;
+            z-index: 2000;
+            padding: 16px;
+            overflow-y: auto;
         }
 
         .modal-content {
             background-color: var(--bg-card);
             border: 1px solid var(--accent-color);
             border-radius: var(--radius);
-            max-width: 650px;
             width: 100%;
-            max-height: 90vh;
+            max-width: 600px;
+            max-height: 85vh;
             overflow-y: auto;
-            padding: 32px;
+            padding: 24px;
             position: relative;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.8);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.9);
+            margin: auto;
         }
 
         .modal-close {
             position: absolute;
-            top: 16px;
-            right: 20px;
+            top: 12px;
+            right: 16px;
             background: none;
             border: none;
             color: var(--text-muted);
@@ -568,6 +570,7 @@
             cursor: pointer;
             transition: color 0.3s;
             line-height: 1;
+            z-index: 10;
         }
 
         .modal-close:hover {
@@ -577,12 +580,14 @@
         .modal-body {
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 16px;
+            width: 100%;
+            word-break: break-word;
         }
 
         .modal-img {
             width: 100%;
-            max-height: 300px;
+            max-height: 240px;
             object-fit: cover;
             border-radius: 4px;
             background-color: #111;
@@ -590,19 +595,21 @@
 
         .thumbnails-grid {
             display: flex;
-            gap: 10px;
+            gap: 8px;
             overflow-x: auto;
-            padding-bottom: 5px;
+            padding-bottom: 4px;
+            max-width: 100%;
         }
 
         .thumb-img {
-            width: 70px;
-            height: 70px;
+            width: 60px;
+            height: 60px;
             object-fit: cover;
             border-radius: 4px;
             cursor: pointer;
             border: 2px solid transparent;
             opacity: 0.6;
+            flex-shrink: 0;
             transition: all 0.3s ease;
         }
 
@@ -612,7 +619,7 @@
         }
 
         .modal-title {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             color: var(--accent-color);
             text-transform: uppercase;
             font-weight: 900;
@@ -620,19 +627,19 @@
 
         .modal-desc {
             color: #d0d0d0;
-            font-size: 1.05rem;
-            line-height: 1.7;
+            font-size: 0.98rem;
+            line-height: 1.6;
         }
 
         .modal-desc p {
-            margin-bottom: 12px;
+            margin-bottom: 10px;
         }
 
         .modal-details {
             background: #222;
-            padding: 12px 16px;
+            padding: 10px 14px;
             border-radius: 4px;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             font-weight: bold;
             color: #fff;
             border-left: 4px solid var(--accent-color);
@@ -642,17 +649,17 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 12px;
+            gap: 10px;
             background-color: var(--whatsapp-green);
             color: #fff;
-            padding: 16px 24px;
+            padding: 14px 20px;
             border-radius: var(--radius);
             font-weight: 900;
             text-transform: uppercase;
-            font-size: 1.1rem;
+            font-size: 1rem;
             text-decoration: none;
             transition: transform 0.3s, box-shadow 0.3s;
-            margin-top: 10px;
+            margin-top: 6px;
             border: none;
             cursor: pointer;
             width: 100%;
@@ -663,6 +670,20 @@
             transform: translateY(-2px);
             box-shadow: 0 8px 20px rgba(37, 211, 102, 0.4);
             color: #fff;
+        }
+
+        @media (max-width: 600px) {
+            .modal-content {
+                padding: 16px;
+                max-height: 90vh;
+                max-width: 95vw;
+            }
+            .modal-title {
+                font-size: 1.25rem;
+            }
+            .modal-img {
+                max-height: 200px;
+            }
         }
 
         /* --- BOTÃO FLUTUANTE DO WHATSAPP --- */
@@ -899,9 +920,11 @@
             </div>
         </div>
         
+        <!-- MENU DE CATEGORIAS (DESKTOP E HAMBÚRGUER MOBILE PREENCHIDO) -->
         <nav class="header-nav" id="header-nav">
             <div class="container header-nav-inner">
                 <ul>
+                    <li><a onclick="filtrarCategoria('todas'); fecharMenu();">Todos os Produtos</a></li>
                     <li><a onclick="filtrarCategoria('bloqueador-de-carboidrato'); fecharMenu();">Bloqueador de Carboidrato</a></li>
                     <li><a onclick="filtrarCategoria('ganho-de-massa'); fecharMenu();">Ganho de Massa</a></li>
                     <li><a onclick="filtrarCategoria('indutor-do-sono'); fecharMenu();">Indutor do Sono</a></li>
@@ -1036,7 +1059,7 @@
         </svg>
     </a>
 
-    <!-- MODAL / POPUP DINÂMICO -->
+    <!-- MODAL / POPUP BLINDADO CONTRA ESTOUROS NO MOBILE -->
     <div id="modal-detalhes" class="modal-overlay">
         <div class="modal-content">
             <button class="modal-close" onclick="fecharModal()">&times;</button>
@@ -1169,7 +1192,6 @@
                 const match = btn.getAttribute('onclick').includes(`'${categoria}'`);
                 btn.classList.toggle('ativo', match);
 
-                // Centraliza automaticamente o botão do filtro selecionado no celular
                 if (match && window.innerWidth <= 900) {
                     btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
                 }

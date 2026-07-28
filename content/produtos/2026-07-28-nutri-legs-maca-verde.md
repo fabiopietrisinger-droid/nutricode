@@ -1,8 +1,12 @@
 ---
 title: Nutri Legs Maçã Verde
 detalhes: Peso líquido 600g  30 doses
+categorias:
+  - pre-treino
+image: /imagens/uploads/NUTRILEGS_MACA_VERDE.png
 ---
 Pré treino indicado para aumentar a disposição e energia durante o exercício através da taurina, maltodextrina e mix de minerais e vitaminas nobres. Possui baixa concentração de cafeína Recomendado para atividades de longa duração. Ajuda a reduzir a fadiga central.  
+
 
 
 

@@ -1,6 +1,9 @@
 ---
 title: Energy Mix
-detalhes: 300g.
+detalhes: 300g
+categorias:
+  - ganho-de-massa
+image: /imagens/uploads/ENERGMIX.png
 ---
 Potente e exclusivo Mix que associa a creatina micronizada com palatinose, ribose, piroxidina e cobalamina garantindo maior velocidade de recuperação e potência muscular.**** 
 

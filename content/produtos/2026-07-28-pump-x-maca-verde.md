@@ -1,5 +1,6 @@
 ---
 title: Pump X Maçã Verde
+ativo: false
 detalhes: Peso líquido 600g  20 doses
 categorias:
   - pre-treino

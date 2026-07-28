@@ -99,7 +99,7 @@
             gap: 16px;
         }
 
-        /* LOGO 80% MAIOR */
+        /* LOGO MAIOR */
         .logo img {
             max-height: 117px; 
             width: auto;
@@ -166,7 +166,7 @@
             background-color: var(--accent-color);
         }
 
-        /* --- MENU DESKTOP OPTIMIZED (FONTE AJUSTADA E CENTRALIZADA) --- */
+        /* --- MENU DESKTOP --- */
         .header-nav {
             background-color: var(--bg-body);
             padding: 12px 0;
@@ -396,17 +396,17 @@
             }
         }
 
-        /* --- GRID DE PRODUTOS --- */
+        /* --- GRID DE PRODUTOS (DESKTOP EM 3 COLUNAS PARA IMAGENS MAIORES) --- */
         .grid-produtos {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 24px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 28px;
         }
 
         .card-produto {
             background-color: var(--bg-card);
             border-radius: var(--radius);
-            padding: 24px;
+            padding: 20px;
             border: 1px solid #2a2a2a;
             display: flex;
             flex-direction: column;
@@ -418,30 +418,35 @@
             border-color: var(--accent-color);
         }
 
+        /* FORMATO QUADRADO E LIMPO COM FUNDO BRANCO PARA O PRODUTO */
         .img-wrapper {
             width: 100%;
-            height: 220px;
-            background-color: #111;
-            border-radius: 4px;
-            margin-bottom: 20px;
+            aspect-ratio: 1 / 1;
+            background-color: #ffffff;
+            border-radius: 6px;
+            margin-bottom: 16px;
             overflow: hidden;
             cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px;
         }
 
         .img-produto {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: contain; /* Encaixa a embalagem do produto sem cortar */
             transition: transform 0.3s ease;
         }
 
         .card-produto:hover .img-produto {
-            transform: scale(1.05);
+            transform: scale(1.06);
         }
 
         .card-produto h3 {
-            font-size: 1.3rem;
-            margin-bottom: 12px;
+            font-size: 1.35rem;
+            margin-bottom: 10px;
             color: var(--accent-color);
             text-transform: uppercase;
             cursor: pointer;
@@ -449,7 +454,7 @@
 
         .card-produto p.desc {
             color: var(--text-muted);
-            font-size: 0.9rem;
+            font-size: 0.92rem;
             margin-bottom: 16px;
             flex-grow: 1;
             display: -webkit-box;
@@ -464,7 +469,7 @@
             background: #222;
             padding: 10px;
             border-radius: 4px;
-            margin-bottom: 20px;
+            margin-bottom: 18px;
             color: #ddd;
         }
 
@@ -487,7 +492,15 @@
             background-color: var(--accent-hover);
         }
 
-        /* --- EXIBIÇÃO DE 2 PRODUTOS POR LINHA EM CELULARES --- */
+        /* TABLET EM 2 COLUNAS */
+        @media (max-width: 900px) {
+            .grid-produtos {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+        }
+
+        /* CELULAR EM 2 PRODUTOS POR LINHA */
         @media (max-width: 600px) {
             .grid-produtos {
                 grid-template-columns: repeat(2, 1fr);
@@ -495,30 +508,30 @@
             }
 
             .card-produto {
-                padding: 12px;
+                padding: 10px;
             }
 
             .img-wrapper {
-                height: 130px;
-                margin-bottom: 12px;
+                padding: 6px;
+                margin-bottom: 10px;
             }
 
             .card-produto h3 {
                 font-size: 0.95rem;
-                margin-bottom: 8px;
+                margin-bottom: 6px;
                 line-height: 1.2;
             }
 
             .card-produto p.desc {
                 font-size: 0.78rem;
-                margin-bottom: 10px;
+                margin-bottom: 8px;
                 -webkit-line-clamp: 2;
             }
 
             .card-produto .details {
                 font-size: 0.72rem;
                 padding: 6px 8px;
-                margin-bottom: 12px;
+                margin-bottom: 10px;
             }
 
             .btn-comprar {
@@ -528,7 +541,7 @@
             }
         }
 
-        /* --- MODAL / POPUP BLINDADO CONTRA ESTOUROS NO MOBILE --- */
+        /* --- MODAL / POPUP EM TEMA CLARO E ENXUTO --- */
         .modal-overlay {
             position: fixed;
             inset: 0;
@@ -544,26 +557,27 @@
         }
 
         .modal-content {
-            background-color: var(--bg-card);
-            border: 1px solid var(--accent-color);
+            background-color: #ffffff; /* Fundo Claro */
+            color: #111111; /* Texto Escuro */
+            border: 2px solid var(--accent-color);
             border-radius: var(--radius);
             width: 100%;
-            max-width: 600px;
-            max-height: 85vh;
+            max-width: 550px; /* Mais compacto */
+            max-height: 88vh;
             overflow-y: auto;
-            padding: 24px;
+            padding: 20px; /* Espaçamento bem enxuto */
             position: relative;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.9);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
             margin: auto;
         }
 
         .modal-close {
             position: absolute;
-            top: 12px;
-            right: 16px;
+            top: 10px;
+            right: 14px;
             background: none;
             border: none;
-            color: var(--text-muted);
+            color: #666666;
             font-size: 2rem;
             cursor: pointer;
             transition: color 0.3s;
@@ -572,41 +586,44 @@
         }
 
         .modal-close:hover {
-            color: var(--accent-color);
+            color: #000000;
         }
 
         .modal-body {
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: 12px; /* Proximidade harmônica das infos */
             width: 100%;
             word-break: break-word;
         }
 
         .modal-img {
             width: 100%;
-            max-height: 240px;
-            object-fit: cover;
-            border-radius: 4px;
-            background-color: #111;
+            max-height: 220px;
+            object-fit: contain;
+            border-radius: 6px;
+            background-color: #ffffff;
+            padding: 8px;
+            border: 1px solid #eeeeee;
         }
 
         .thumbnails-grid {
             display: flex;
             gap: 8px;
             overflow-x: auto;
-            padding-bottom: 4px;
+            padding-bottom: 2px;
             max-width: 100%;
         }
 
         .thumb-img {
-            width: 60px;
-            height: 60px;
-            object-fit: cover;
+            width: 52px;
+            height: 52px;
+            object-fit: contain;
             border-radius: 4px;
             cursor: pointer;
-            border: 2px solid transparent;
-            opacity: 0.6;
+            border: 2px solid #e0e0e0;
+            background-color: #ffffff;
+            opacity: 0.7;
             flex-shrink: 0;
             transition: all 0.3s ease;
         }
@@ -617,30 +634,31 @@
         }
 
         .modal-title {
-            font-size: 1.5rem;
-            color: var(--accent-color);
+            font-size: 1.4rem;
+            color: #0d0d0d; /* Título bem escuro e legível */
             text-transform: uppercase;
             font-weight: 900;
-        }
-
-        .modal-desc {
-            color: #d0d0d0;
-            font-size: 0.98rem;
-            line-height: 1.6;
-        }
-
-        .modal-desc p {
-            margin-bottom: 10px;
+            line-height: 1.2;
         }
 
         .modal-details {
-            background: #222;
-            padding: 10px 14px;
+            background: #f4f6f8;
+            padding: 8px 12px;
             border-radius: 4px;
-            font-size: 0.9rem;
+            font-size: 0.88rem;
             font-weight: bold;
-            color: #fff;
+            color: #111111;
             border-left: 4px solid var(--accent-color);
+        }
+
+        .modal-desc {
+            color: #333333; /* Leitura confortável no fundo claro */
+            font-size: 0.92rem;
+            line-height: 1.5;
+        }
+
+        .modal-desc p {
+            margin-bottom: 8px;
         }
 
         .modal-btn-whatsapp {
@@ -649,15 +667,15 @@
             justify-content: center;
             gap: 10px;
             background-color: var(--whatsapp-green);
-            color: #fff;
-            padding: 14px 20px;
+            color: #ffffff;
+            padding: 13px 18px;
             border-radius: var(--radius);
             font-weight: 900;
             text-transform: uppercase;
-            font-size: 1rem;
+            font-size: 0.95rem;
             text-decoration: none;
             transition: transform 0.3s, box-shadow 0.3s;
-            margin-top: 6px;
+            margin-top: 4px;
             border: none;
             cursor: pointer;
             width: 100%;
@@ -666,21 +684,21 @@
         .modal-btn-whatsapp:hover {
             background-color: var(--whatsapp-hover);
             transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(37, 211, 102, 0.4);
-            color: #fff;
+            box-shadow: 0 6px 18px rgba(37, 211, 102, 0.4);
+            color: #ffffff;
         }
 
         @media (max-width: 600px) {
             .modal-content {
-                padding: 16px;
+                padding: 14px;
                 max-height: 90vh;
                 max-width: 95vw;
             }
             .modal-title {
-                font-size: 1.25rem;
+                font-size: 1.15rem;
             }
             .modal-img {
-                max-height: 200px;
+                max-height: 180px;
             }
         }
 
@@ -918,7 +936,7 @@
             </div>
         </div>
         
-        <!-- MENU DE CATEGORIAS (SOMENTE AS 8 CATEGORIAS - CENTRALIZADAS E AJUSTADAS) -->
+        <!-- MENU DE CATEGORIAS DESKTOP & MOBILE -->
         <nav class="header-nav" id="header-nav">
             <div class="container header-nav-inner">
                 <ul>
@@ -1056,7 +1074,7 @@
         </svg>
     </a>
 
-    <!-- MODAL / POPUP BLINDADO CONTRA ESTOUROS NO MOBILE -->
+    <!-- MODAL / POPUP EM TEMA CLARO E ESPAÇAMENTO COMPACTO -->
     <div id="modal-detalhes" class="modal-overlay">
         <div class="modal-content">
             <button class="modal-close" onclick="fecharModal()">&times;</button>
@@ -1173,7 +1191,7 @@
                 card.className = 'card-produto';
                 card.innerHTML = `
                     <div class="img-wrapper" onclick="abrirModal(${originalIdx})">
-                        <img src="${imgSrc}" alt="${produto.title || 'Suplemento'}" class="img-produto" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'100%\\' height=\\'100%\\'><rect width=\\'100%\\' height=\\'100%\\' fill=\\'#111\\'/><text x=\\'50%\\' y=\\'50%\\' fill=\\'#555\\' font-family=\\'Arial\\' font-size=\\'14\\' text-anchor=\\'middle\\' dominant-baseline=\\'middle\\'>Sem Imagem</text></svg>'">
+                        <img src="${imgSrc}" alt="${produto.title || 'Suplemento'}" class="img-produto" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'100%\\' height=\\'100%\\'><rect width=\\'100%\\' height=\\'100%\\' fill=\\'#fff\\'/><text x=\\'50%\\' y=\\'50%\\' fill=\\'#555\\' font-family=\\'Arial\\' font-size=\\'14\\' text-anchor=\\'middle\\' dominant-baseline=\\'middle\\'>Sem Imagem</text></svg>'">
                     </div>
                     <h3 onclick="abrirModal(${originalIdx})">${produto.title || 'Suplemento NutriCode'}</h3>
                     <p class="desc">${produto.body ? produto.body.replace(/<[^>]*>?/gm, '') : ''}</p>
@@ -1256,7 +1274,7 @@
                 });
             }
 
-            // MENSAGEM DO PRODUTO: "Estou no site e tenho interesse pelo produto: <categoria> | <produto>"
+            // MENSAGEM DO PRODUTO
             const textoWaProduto = `Estou no site e tenho interesse pelo produto: ${categoriaFormatada} | ${tituloFormatado}`;
             document.getElementById('modal-btn-wa').href = `https://wa.me/${WHATSAPP_NUMERO}?text=${encodeURIComponent(textoWaProduto)}`;
             

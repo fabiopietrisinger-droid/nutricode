@@ -79,12 +79,17 @@
         }
 
         /* --- CABEÇALHO --- */
+        header {
+            position: relative;
+            z-index: 1000;
+        }
+
         .header-top {
             background-color: var(--bg-header);
             padding: 16px 0;
             border-bottom: 1px solid #2a2a2a;
             position: relative;
-            z-index: 100;
+            z-index: 1001;
         }
 
         .header-top-inner {
@@ -94,7 +99,7 @@
             gap: 16px;
         }
 
-        /* LOGO 80% MAIOR (117px no desktop) */
+        /* LOGO 80% MAIOR */
         .logo img {
             max-height: 117px; 
             width: auto;
@@ -137,7 +142,7 @@
             padding: 8px;
             flex-direction: column;
             gap: 5px;
-            z-index: 101;
+            z-index: 1002;
         }
 
         .hamburger-btn span {
@@ -161,31 +166,25 @@
             background-color: var(--accent-color);
         }
 
-        /* --- MENU DESKTOP & MOBILE --- */
+        /* --- MENU DESKTOP COM FONTE E ESPAÇAMENTO DINÂMICOS --- */
         .header-nav {
             background-color: var(--bg-body);
-            padding: 15px 0;
+            padding: 14px 0;
             border-bottom: 1px solid #2a2a2a;
             transition: all 0.3s ease-in-out;
         }
 
         .header-nav-inner {
-            overflow-x: auto;
-            scrollbar-width: none; 
-            -ms-overflow-style: none;
-            -webkit-overflow-scrolling: touch;
-        }
-
-        .header-nav-inner::-webkit-scrollbar {
-            display: none;
+            width: 100%;
         }
 
         .header-nav ul {
             list-style: none;
             display: flex;
-            gap: 24px;
-            justify-content: center;
-            white-space: nowrap;
+            gap: clamp(8px, 1.5vw, 24px); /* Espaçamento dinâmico */
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
         }
 
         .header-nav ul li {
@@ -194,17 +193,19 @@
 
         .header-nav ul li a {
             color: var(--text-muted);
-            font-size: 0.9rem;
+            font-size: clamp(0.68rem, 0.85vw, 0.9rem); /* Tamanho de fonte dinâmico */
             font-weight: bold;
             text-transform: uppercase;
             transition: color 0.3s;
             cursor: pointer;
+            white-space: nowrap;
         }
 
         .header-nav ul li a:hover {
             color: var(--accent-color);
         }
 
+        /* --- MENU HAMBÚRGUER ENCAIXADO LOGO ABAIXO DO HEADER (MOBILE) --- */
         @media (max-width: 768px) {
             .logo img {
                 max-height: 70px;
@@ -222,28 +223,24 @@
             .header-nav {
                 display: none;
                 position: absolute;
-                top: 100%;
+                top: 100%; /* Fixado diretamente abaixo do topo */
                 left: 0;
                 width: 100%;
                 background-color: #141414;
                 border-bottom: 1px solid #2a2a2a;
-                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.9);
+                box-shadow: 0 15px 30px rgba(0, 0, 0, 0.95);
                 z-index: 1000;
+                padding: 0;
             }
 
             .header-nav.active {
                 display: block;
             }
 
-            .header-nav-inner {
-                overflow-x: visible;
-            }
-
             .header-nav ul {
                 flex-direction: column;
                 gap: 0;
-                white-space: normal;
-                padding: 10px 0;
+                justify-content: flex-start;
             }
 
             .header-nav ul li {
@@ -920,7 +917,7 @@
             </div>
         </div>
         
-        <!-- MENU DE CATEGORIAS (DESKTOP E HAMBÚRGUER MOBILE PREENCHIDO) -->
+        <!-- MENU DE CATEGORIAS (DESKTOP E HAMBÚRGUER MOBILE FIXADO PERFEITAMENTE) -->
         <nav class="header-nav" id="header-nav">
             <div class="container header-nav-inner">
                 <ul>

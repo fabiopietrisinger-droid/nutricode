@@ -4,6 +4,7 @@ detalhes: 900 gramas
 categorias:
   - ganho-de-massa
   - proteina
+image: /imagens/uploads/EXTREMEWHEY.png
 ---
 Whey  proteín  e aminoácidos advindos do soro do leite garantindo aporte proteico e de anti-corpos que vão acelerar sua recuperação muscular. Tudo isso unido a um mix de sabores inigualáveis!
 

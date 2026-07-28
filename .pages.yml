@@ -11,6 +11,10 @@ content:
       - name: "title"
         label: "Nome do Suplemento"
         type: "string"
+      - name: "ativo"
+        label: "Produto Ativo no Site?"
+        type: "boolean"
+        default: true
       - name: "detalhes"
         label: "Detalhes (Ex: 900g, 60 cápsulas, 30ml)"
         type: "string"

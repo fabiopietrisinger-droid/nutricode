@@ -1,5 +1,6 @@
 ---
 title: Nutri Legs Maçã Verde
+ativo: false
 detalhes: Peso líquido 600g  30 doses
 categorias:
   - pre-treino

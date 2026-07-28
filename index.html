@@ -166,10 +166,10 @@
             background-color: var(--accent-color);
         }
 
-        /* --- MENU DESKTOP COM FONTE E ESPAÇAMENTO DINÂMICOS --- */
+        /* --- MENU DESKTOP OPTIMIZED (FONTE AJUSTADA E CENTRALIZADA) --- */
         .header-nav {
             background-color: var(--bg-body);
-            padding: 14px 0;
+            padding: 12px 0;
             border-bottom: 1px solid #2a2a2a;
             transition: all 0.3s ease-in-out;
         }
@@ -181,8 +181,8 @@
         .header-nav ul {
             list-style: none;
             display: flex;
-            gap: clamp(8px, 1.5vw, 24px); /* Espaçamento dinâmico */
-            justify-content: space-between;
+            gap: clamp(10px, 1.2vw, 20px);
+            justify-content: center;
             align-items: center;
             width: 100%;
         }
@@ -193,9 +193,10 @@
 
         .header-nav ul li a {
             color: var(--text-muted);
-            font-size: clamp(0.68rem, 0.85vw, 0.9rem); /* Tamanho de fonte dinâmico */
-            font-weight: bold;
+            font-size: 0.78rem;
+            font-weight: 700;
             text-transform: uppercase;
+            letter-spacing: 0.3px;
             transition: color 0.3s;
             cursor: pointer;
             white-space: nowrap;
@@ -205,7 +206,7 @@
             color: var(--accent-color);
         }
 
-        /* --- MENU HAMBÚRGUER ENCAIXADO LOGO ABAIXO DO HEADER (MOBILE) --- */
+        /* --- MENU HAMBÚRGUER MOBILE --- */
         @media (max-width: 768px) {
             .logo img {
                 max-height: 70px;
@@ -223,7 +224,7 @@
             .header-nav {
                 display: none;
                 position: absolute;
-                top: 100%; /* Fixado diretamente abaixo do topo */
+                top: 100%;
                 left: 0;
                 width: 100%;
                 background-color: #141414;
@@ -251,7 +252,7 @@
                 display: block;
                 padding: 14px 20px;
                 border-bottom: 1px solid #222;
-                font-size: 0.9rem;
+                font-size: 0.88rem;
                 text-align: center;
             }
 
@@ -321,7 +322,7 @@
             font-weight: 900;
         }
 
-        /* --- FILTROS 100% RESPONSIVOS E ANTI-QUEBRA --- */
+        /* --- FILTROS RESPONSIVOS --- */
         .filtro-painel-wrapper {
             width: 100%;
             margin-bottom: 32px;
@@ -917,11 +918,10 @@
             </div>
         </div>
         
-        <!-- MENU DE CATEGORIAS (DESKTOP E HAMBÚRGUER MOBILE FIXADO PERFEITAMENTE) -->
+        <!-- MENU DE CATEGORIAS (SOMENTE AS 8 CATEGORIAS - CENTRALIZADAS E AJUSTADAS) -->
         <nav class="header-nav" id="header-nav">
             <div class="container header-nav-inner">
                 <ul>
-                    <li><a onclick="filtrarCategoria('todas'); fecharMenu();">Todos os Produtos</a></li>
                     <li><a onclick="filtrarCategoria('bloqueador-de-carboidrato'); fecharMenu();">Bloqueador de Carboidrato</a></li>
                     <li><a onclick="filtrarCategoria('ganho-de-massa'); fecharMenu();">Ganho de Massa</a></li>
                     <li><a onclick="filtrarCategoria('indutor-do-sono'); fecharMenu();">Indutor do Sono</a></li>

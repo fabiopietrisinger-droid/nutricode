@@ -1,6 +1,9 @@
 ---
 title: Up Booster
 detalhes: Contém 120 cápsulas  Peso líquido 84g  60 doses
+categorias:
+  - precursor-hormonal
+image: /imagens/uploads/UPBUSTER.png
 ---
 Estimula produção natural de testosterona no organismo, exclusivo para Homens. Aumenta o ganho de massa magra.
 

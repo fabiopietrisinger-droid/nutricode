@@ -33,4 +33,3 @@ Whey  proteín  e aminoácidos advindos do soro do leite garantindo aporte pro
 | **% Valores Diários de referência com base em uma dieta de 2000kcal ou 8400kj.Seus valores diários podem ser maiores ou menores dependendo de suas necessidades energéticas. Valor diário não estabelecido.** |  |  |
 
 
- 

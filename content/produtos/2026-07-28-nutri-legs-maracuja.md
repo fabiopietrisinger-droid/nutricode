@@ -1,6 +1,9 @@
 ---
 title: Nutri Legs Maracujá
 detalhes: Peso líquido 600g  30 doses
+categorias:
+  - pre-treino
+image: /imagens/uploads/NUTRILEGSMARACUJA.png
 ---
 Pré treino indicado para aumentar a disposição e energia durante o exercício através da taurina, maltodextrina e mix de minerais e vitaminas nobres. Possui baixa concentração de cafeína Recomendado para atividades de longa duração. Ajuda a reduzir a fadiga central.
 

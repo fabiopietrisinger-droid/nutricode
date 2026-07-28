@@ -78,20 +78,23 @@
             padding: 0 5%;
         }
 
-        /* --- CABEÇALHO COM GRID RIGOROSAMENTE ALINHADO --- */
+        /* --- CABEÇALHO --- */
         .header-top {
             background-color: var(--bg-header);
             padding: 16px 0;
             border-bottom: 1px solid #2a2a2a;
+            position: relative;
+            z-index: 100;
         }
 
         .header-top-inner {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 16px;
         }
 
-        /* LOGO 80% MAIOR (117px) */
+        /* LOGO 80% MAIOR (117px no desktop) */
         .logo img {
             max-height: 117px; 
             width: auto;
@@ -125,11 +128,45 @@
             color: #ffffff;
         }
 
-        /* --- MENU --- */
+        /* BOTÃO HAMBÚRGUER (MOBILE) */
+        .hamburger-btn {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+            flex-direction: column;
+            gap: 5px;
+            z-index: 101;
+        }
+
+        .hamburger-btn span {
+            display: block;
+            width: 26px;
+            height: 3px;
+            background-color: var(--text-main);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger-btn.active span:nth-child(1) {
+            transform: translateY(8px) rotate(45deg);
+            background-color: var(--accent-color);
+        }
+        .hamburger-btn.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger-btn.active span:nth-child(3) {
+            transform: translateY(-8px) rotate(-45deg);
+            background-color: var(--accent-color);
+        }
+
+        /* --- MENU DESKTOP & MOBILE --- */
         .header-nav {
             background-color: var(--bg-body);
             padding: 15px 0;
             border-bottom: 1px solid #2a2a2a;
+            transition: all 0.3s ease-in-out;
         }
 
         .header-nav-inner {
@@ -169,18 +206,59 @@
         }
 
         @media (max-width: 768px) {
-            .header-top-inner { 
-                flex-direction: column; 
-                gap: 16px; 
+            .logo img {
+                max-height: 70px;
+            }
+
+            .header-cta-btn {
+                padding: 10px 18px;
+                font-size: 0.8rem;
+            }
+
+            .hamburger-btn {
+                display: flex;
+            }
+
+            .header-nav {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: #141414;
+                border-bottom: 1px solid #2a2a2a;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.9);
+            }
+
+            .header-nav.active {
+                display: block;
+            }
+
+            .header-nav-inner {
+                overflow-x: visible;
+            }
+
+            .header-nav ul {
+                flex-direction: column;
+                gap: 0;
+                white-space: normal;
+                padding: 10px 0;
+            }
+
+            .header-nav ul li {
+                width: 100%;
+            }
+
+            .header-nav ul li a {
+                display: block;
+                padding: 14px 20px;
+                border-bottom: 1px solid #222;
+                font-size: 0.95rem;
                 text-align: center;
             }
 
-            .logo img {
-                max-height: 85px; /* Ajuste responsivo e destacado para telas pequenas */
-            }
-
-            .header-nav ul { 
-                justify-content: flex-start; 
+            .header-nav ul li:last-child a {
+                border-bottom: none;
             }
         }
 
@@ -245,13 +323,28 @@
             font-weight: 900;
         }
 
-        /* --- FILTROS COMPLETAMENTE RESPONSIVOS --- */
+        /* --- FILTROS 100% RESPONSIVOS E ANTI-QUEBRA (MOBILE RE-ENGINEERED) --- */
+        .filtro-painel-wrapper {
+            width: 100%;
+            margin-bottom: 32px;
+            position: relative;
+        }
+
         .filtro-painel {
             display: flex;
-            flex-wrap: wrap;
+            align-items: center;
             gap: 10px;
-            justify-content: center;
-            margin-bottom: 40px;
+            overflow-x: auto;
+            overflow-y: hidden;
+            padding: 8px 0 16px 0;
+            width: 100%;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none; /* IE/Edge */
+        }
+
+        .filtro-painel::-webkit-scrollbar {
+            display: none; /* Chrome/Safari */
         }
 
         .filtro-btn {
@@ -266,7 +359,8 @@
             white-space: nowrap;
             cursor: pointer;
             transition: all 0.3s ease;
-            flex-shrink: 0; /* IMPEDE O ACHATAMENTO DOS BOTÕES NO MOBILE */
+            flex: 0 0 auto; /* Impede esmagamento e quebra de linha em qualquer dispositivo */
+            user-select: none;
         }
 
         .filtro-btn.ativo, .filtro-btn:hover {
@@ -276,23 +370,31 @@
             box-shadow: 0 4px 15px rgba(35, 207, 231, 0.25);
         }
 
-        /* Ajuste do carrossel de filtros para telas mobile */
+        /* Ajuste de margens laterais sangradas para rolar perfeitamente no celular */
         @media (max-width: 900px) {
-            .filtro-painel {
-                flex-wrap: nowrap;
-                justify-content: flex-start;
-                overflow-x: auto;
-                padding-bottom: 15px;
-                scrollbar-width: none;
-                -ms-overflow-style: none;
-                -webkit-overflow-scrolling: touch;
+            .filtro-painel-wrapper {
                 margin-left: -5%;
                 margin-right: -5%;
+                width: calc(100% + 10%);
+            }
+
+            .filtro-painel {
                 padding-left: 5%;
                 padding-right: 5%;
             }
-            .filtro-painel::-webkit-scrollbar {
-                display: none;
+
+            .filtro-btn {
+                font-size: 0.8rem;
+                padding: 8px 16px;
+            }
+        }
+
+        @media (min-width: 901px) {
+            .filtro-painel {
+                flex-wrap: wrap;
+                justify-content: center;
+                overflow-x: visible;
+                padding: 0;
             }
         }
 
@@ -385,6 +487,47 @@
 
         .btn-comprar:hover {
             background-color: var(--accent-hover);
+        }
+
+        /* --- EXIBIÇÃO DE 2 PRODUTOS POR LINHA EM CELULARES --- */
+        @media (max-width: 600px) {
+            .grid-produtos {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+
+            .card-produto {
+                padding: 12px;
+            }
+
+            .img-wrapper {
+                height: 130px;
+                margin-bottom: 12px;
+            }
+
+            .card-produto h3 {
+                font-size: 0.95rem;
+                margin-bottom: 8px;
+                line-height: 1.2;
+            }
+
+            .card-produto p.desc {
+                font-size: 0.78rem;
+                margin-bottom: 10px;
+                -webkit-line-clamp: 2;
+            }
+
+            .card-produto .details {
+                font-size: 0.72rem;
+                padding: 6px 8px;
+                margin-bottom: 12px;
+            }
+
+            .btn-comprar {
+                padding: 10px 8px;
+                font-size: 0.75rem;
+                letter-spacing: 0;
+            }
         }
 
         /* --- MODAL / POPUP DE DETALHES --- */
@@ -746,20 +889,27 @@
                     </svg>
                     Peça por whatsapp
                 </a>
+
+                <!-- BOTÃO HAMBÚRGUER (MOBILE) -->
+                <button class="hamburger-btn" id="hamburger-toggle" onclick="toggleMenu()" aria-label="Abrir Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
             </div>
         </div>
         
-        <nav class="header-nav">
+        <nav class="header-nav" id="header-nav">
             <div class="container header-nav-inner">
                 <ul>
-                    <li><a onclick="filtrarCategoria('bloqueador-de-carboidrato')">Bloqueador de Carboidrato</a></li>
-                    <li><a onclick="filtrarCategoria('ganho-de-massa')">Ganho de Massa</a></li>
-                    <li><a onclick="filtrarCategoria('indutor-do-sono')">Indutor do Sono</a></li>
-                    <li><a onclick="filtrarCategoria('multivitaminico')">Multivitamínico</a></li>
-                    <li><a onclick="filtrarCategoria('pre-treino')">Pré Treino</a></li>
-                    <li><a onclick="filtrarCategoria('precursor-hormonal')">Precursor Hormonal</a></li>
-                    <li><a onclick="filtrarCategoria('proteina')">Proteína</a></li>
-                    <li><a onclick="filtrarCategoria('termogenico')">Termogênico</a></li>
+                    <li><a onclick="filtrarCategoria('bloqueador-de-carboidrato'); fecharMenu();">Bloqueador de Carboidrato</a></li>
+                    <li><a onclick="filtrarCategoria('ganho-de-massa'); fecharMenu();">Ganho de Massa</a></li>
+                    <li><a onclick="filtrarCategoria('indutor-do-sono'); fecharMenu();">Indutor do Sono</a></li>
+                    <li><a onclick="filtrarCategoria('multivitaminico'); fecharMenu();">Multivitamínico</a></li>
+                    <li><a onclick="filtrarCategoria('pre-treino'); fecharMenu();">Pré Treino</a></li>
+                    <li><a onclick="filtrarCategoria('precursor-hormonal'); fecharMenu();">Precursor Hormonal</a></li>
+                    <li><a onclick="filtrarCategoria('proteina'); fecharMenu();">Proteína</a></li>
+                    <li><a onclick="filtrarCategoria('termogenico'); fecharMenu();">Termogênico</a></li>
                 </ul>
             </div>
         </nav>
@@ -794,16 +944,18 @@
         <section class="products-section container">
             <h2 class="section-title">Nossa linha de produtos</h2>
             
-            <div class="filtro-painel">
-                <button class="filtro-btn ativo" onclick="filtrarCategoria('todas')">Todos</button>
-                <button class="filtro-btn" onclick="filtrarCategoria('bloqueador-de-carboidrato')">Bloqueador de Carboidrato</button>
-                <button class="filtro-btn" onclick="filtrarCategoria('ganho-de-massa')">Ganho de Massa</button>
-                <button class="filtro-btn" onclick="filtrarCategoria('indutor-do-sono')">Indutor do Sono</button>
-                <button class="filtro-btn" onclick="filtrarCategoria('multivitaminico')">Multivitamínico</button>
-                <button class="filtro-btn" onclick="filtrarCategoria('pre-treino')">Pré Treino</button>
-                <button class="filtro-btn" onclick="filtrarCategoria('precursor-hormonal')">Precursor Hormonal</button>
-                <button class="filtro-btn" onclick="filtrarCategoria('proteina')">Proteína</button>
-                <button class="filtro-btn" onclick="filtrarCategoria('termogenico')">Termogênico</button>
+            <div class="filtro-painel-wrapper">
+                <div class="filtro-painel" id="filtro-painel">
+                    <button class="filtro-btn ativo" onclick="filtrarCategoria('todas')">Todos</button>
+                    <button class="filtro-btn" onclick="filtrarCategoria('bloqueador-de-carboidrato')">Bloqueador de Carboidrato</button>
+                    <button class="filtro-btn" onclick="filtrarCategoria('ganho-de-massa')">Ganho de Massa</button>
+                    <button class="filtro-btn" onclick="filtrarCategoria('indutor-do-sono')">Indutor do Sono</button>
+                    <button class="filtro-btn" onclick="filtrarCategoria('multivitaminico')">Multivitamínico</button>
+                    <button class="filtro-btn" onclick="filtrarCategoria('pre-treino')">Pré Treino</button>
+                    <button class="filtro-btn" onclick="filtrarCategoria('precursor-hormonal')">Precursor Hormonal</button>
+                    <button class="filtro-btn" onclick="filtrarCategoria('proteina')">Proteína</button>
+                    <button class="filtro-btn" onclick="filtrarCategoria('termogenico')">Termogênico</button>
+                </div>
             </div>
 
             <div class="grid-produtos" id="grid-produtos">
@@ -911,6 +1063,21 @@
         const WHATSAPP_NUMERO = '5511982092987';
         let todosOsProdutos = [];
 
+        // LÓGICA DO MENU HAMBÚRGUER
+        function toggleMenu() {
+            const nav = document.getElementById('header-nav');
+            const btn = document.getElementById('hamburger-toggle');
+            nav.classList.toggle('active');
+            btn.classList.toggle('active');
+        }
+
+        function fecharMenu() {
+            const nav = document.getElementById('header-nav');
+            const btn = document.getElementById('hamburger-toggle');
+            if(nav) nav.classList.remove('active');
+            if(btn) btn.classList.remove('active');
+        }
+
         function urlSemCache(urlBase) {
             if (!urlBase) return '';
             return urlBase + (urlBase.includes('?') ? '&' : '?') + 't=' + new Date().getTime();
@@ -980,7 +1147,7 @@
             lista.forEach((produto) => {
                 const originalIdx = todosOsProdutos.indexOf(produto);
                 const imgSrc = produto.image || 'imagens/uploads/logo.png';
-                const detalhesText = produto.detalhes ? `📦 ${produto.detalhes}` : 'Informações sob consulta';
+                const detalhesText = produto.detalhes ? `📦 ${produto.detalhes}` : 'Consulte detalhes';
 
                 const card = document.createElement('article');
                 card.className = 'card-produto';
@@ -1001,6 +1168,11 @@
             document.querySelectorAll('.filtro-btn').forEach(btn => {
                 const match = btn.getAttribute('onclick').includes(`'${categoria}'`);
                 btn.classList.toggle('ativo', match);
+
+                // Centraliza automaticamente o botão do filtro selecionado no celular
+                if (match && window.innerWidth <= 900) {
+                    btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                }
             });
 
             if (categoria === 'todas') {
